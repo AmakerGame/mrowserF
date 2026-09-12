@@ -38,7 +38,7 @@ class BrowserWebChromeClient(
     /**
      * Decides what to do when a page asks for a new window; see [PopupPolicy].
      *
-     * mrowser has no tabs, so a user-opened window is loaded in the window the user is already
+     * mrowserF has no tabs, so a user-opened window is loaded in the window the user is already
      * looking at — a poster, a trailer or an external link opens as expected and BACK returns.
      * Only a window the page opened by itself is refused.
      */

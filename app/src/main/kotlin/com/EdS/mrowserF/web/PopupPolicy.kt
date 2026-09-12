@@ -3,7 +3,7 @@ package com.EdS.mrowserF.web
 /**
  * Pure: what to do when a page asks for a new window.
  *
- * mrowser has no tabs, so there is nowhere to put a second window. The useful distinction is not
+ * mrowserF has no tabs, so there is nowhere to put a second window. The useful distinction is not
  * "window or no window" but *who asked for it*: a window opened from a click is something the
  * user wants — a poster, a trailer, an external link — and it should simply open in the window
  * they are already in, where BACK returns them. A window the page opened on its own is an

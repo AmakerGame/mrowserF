@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">mrowser</string>
+    <string name="app_name">mrowserF</string>
     <string name="url_hint">Введите адрес</string>
     <string name="go">Перейти</string>
     <string name="back">Назад</string>
@@ -26,7 +26,7 @@
     <string name="history">История</string>
     <string name="clear_history">Очистить всё</string>
     <string name="history_empty">Истории пока нет — посещённые сайты появятся здесь.</string>
-    <string name="exit_title">Выйти из mrowser?</string>
+    <string name="exit_title">Выйти из mrowserF?</string>
     <string name="exit_message">Закрыть браузер и вернуться на главный экран.</string>
     <string name="exit">Выйти</string>
     <string name="close_tab_title">Закрыть эту страницу?</string>

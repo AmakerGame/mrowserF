@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🐾 mrowser
+# 🐾 mrowserF
 
 **A sideload Android TV browser that finally gets video sync right.**
 
@@ -22,13 +22,13 @@ Point it at a site your TV has no app for, let it find the stream, and watch it 
 
 Most Android TV boxes are locked into whatever the app store carries. If a website has the video you want and no app to match, you're stuck — and the handful of TV browsers that do exist play video *inside* the WebView, where audio and picture slowly drift out of sync over a two-hour film.
 
-**mrowser** is built around one job: turn any HLS-streaming website into something your TV plays properly, without ever needing a mouse.
+**mrowserF** is built around one job: turn any HLS-streaming website into something your TV plays properly, without ever needing a mouse.
 
-1. **It watches your traffic.** As a page loads in a normal `WebView`, mrowser sniffs the network requests for an HLS manifest (`.m3u8`).
+1. **It watches your traffic.** As a page loads in a normal `WebView`, mrowserF sniffs the network requests for an HLS manifest (`.m3u8`).
 2. **It hands off to a real player.** The moment a stream is found, a play chip appears and the manifest — plus its cookies, User-Agent, and subtitle tracks — is passed to a native **Media3 / ExoPlayer** activity.
 3. **It gives you a cursor.** A virtual, D-pad-driven mouse pointer makes ordinary point-and-click websites navigable from six feet away with a remote.
 
-> **mrowser ships no content.** No preset sites, no bookmarks, no bundled streams — you type in the URL. It replays only the standard HLS manifest a page has already loaded in your own session; DRM/Widevine content is left untouched in the WebView. See [Scope & disclaimer](#scope--disclaimer).
+> **mrowserF ships no content.** No preset sites, no bookmarks, no bundled streams — you type in the URL. It replays only the standard HLS manifest a page has already loaded in your own session; DRM/Widevine content is left untouched in the WebView. See [Scope & disclaimer](#scope--disclaimer).
 
 ---
 
@@ -76,16 +76,16 @@ The pure decision-making — URL classification, candidate selection, subtitle-c
 
 ## Installation
 
-mrowser is **sideload-only**: no Play Store listing, no Google account, no Play Services.
+mrowserF is **sideload-only**: no Play Store listing, no Google account, no Play Services.
 
 1. Grab the latest `app-release.apk` from [**Releases**](https://github.com/AmakerGame/mrowserF/releases).
 2. Get it onto the TV — a USB stick, a sideloading app like *Downloader* / *Send files to TV*, or `adb install app-release.apk` from a computer all work.
 3. Allow **install from unknown sources** when prompted.
-4. Launch **mrowser** from the Android TV launcher.
+4. Launch **mrowserF** from the Android TV launcher.
 
 ### Keep it updated automatically
 
-[Obtainium](https://github.com/ImranR98/Obtainium) tracks GitHub Releases and updates sideloaded apps for you — no store account needed. Add mrowser with:
+[Obtainium](https://github.com/ImranR98/Obtainium) tracks GitHub Releases and updates sideloaded apps for you — no store account needed. Add mrowserF with:
 
 ```
 https://github.com/AmakerGame/mrowserF
@@ -158,7 +158,7 @@ Release builds sign against a git-ignored `keystore.properties`; CI signs releas
 It works on anything served over **HLS** (`.m3u8`), which is most of the streaming web. Out of scope: DASH-only sites (YouTube included), progressive MP4 files, and DRM/Widevine content — those still load and play in the WebView, just without the native-player handoff.
 
 **Why not just play video inside the WebView?**
-Android TV WebViews sync audio and video poorly over long playback. mrowser hands the stream to a native ExoPlayer session instead, which keeps them locked together.
+Android TV WebViews sync audio and video poorly over long playback. mrowserF hands the stream to a native ExoPlayer session instead, which keeps them locked together.
 
 **What subtitle formats are supported?**
 Side-loaded WebVTT (`.vtt`) and SubRip (`.srt`). Tracks muxed into the HLS stream itself are intentionally left alone — it's the side-loaded ones that go out of sync and need the live nudge.
@@ -188,7 +188,7 @@ Locally on-device only, never uploaded anywhere. Turn on **Clear history on exit
 
 ## Scope & disclaimer
 
-mrowser is a general-purpose web browser. It hosts, bundles, or links to **no content** of its own — every page you open, you typed in yourself.
+mrowserF is a general-purpose web browser. It hosts, bundles, or links to **no content** of its own — every page you open, you typed in yourself.
 
 Under the hood, it renders pages in a standard `WebView` and — much like a browser's built-in dev tools — observes the page's own network traffic to recognize a standard HLS manifest, so that stream can be replayed in a native player with correct sync. It does **not** circumvent DRM or any protection measure (protected content stays in the WebView), and it does not download, record, or redistribute anything.
 

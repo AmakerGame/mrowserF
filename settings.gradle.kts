@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "mrowser"
+rootProject.name = "mrowserF"
 include(":app")

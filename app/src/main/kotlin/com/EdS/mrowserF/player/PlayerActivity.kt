@@ -194,7 +194,7 @@ class PlayerActivity : Activity() {
     }
 
     companion object {
-        const val EXTRA_REQUEST = "mrowser.request"
+        const val EXTRA_REQUEST = "mrowserF.request"
         private const val STEP_MS = 500L
     }
 }
