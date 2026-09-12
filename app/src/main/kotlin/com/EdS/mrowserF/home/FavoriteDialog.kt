@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import com.EdS.mrowserF.R
 import com.EdS.mrowserF.data.Favorite
 import com.EdS.mrowserF.data.FavoritesRepository
+import com.EdS.mrowserF.web.SoftKeyboard
 
 /** Edit (title + url) or delete a favorite, then invoke onChanged. */
 object FavoriteDialog {
@@ -14,9 +15,11 @@ object FavoriteDialog {
     fun show(context: Context, repository: FavoritesRepository, fav: Favorite, onChanged: () -> Unit) {
         val titleField = EditText(context).apply {
             setText(fav.title); hint = context.getString(R.string.title_hint)
+            setOnClickListener { SoftKeyboard.showFor(this) }
         }
         val urlField = EditText(context).apply {
             setText(fav.url); hint = context.getString(R.string.url_hint)
+            setOnClickListener { SoftKeyboard.showFor(this) }
         }
         val pad = (16 * context.resources.displayMetrics.density).toInt()
         val container = LinearLayout(context).apply {

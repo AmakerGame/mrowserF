@@ -20,6 +20,7 @@ import android.widget.TextView
 import com.EdS.mrowserF.R
 import com.EdS.mrowserF.data.Favorite
 import com.EdS.mrowserF.data.FavoritesRepository
+import com.EdS.mrowserF.web.SoftKeyboard
 import com.EdS.mrowserF.web.UrlNormalizer
 
 /** Home overlay: wordmark + URL pill + favorites grid. */
@@ -50,9 +51,14 @@ class HomeView @JvmOverloads constructor(
         grid = findViewById(R.id.favoritesGrid)
         emptyHint = findViewById(R.id.emptyHint)
         urlInput = findViewById(R.id.homeUrlInput)
+        // D-pad OK on a focused EditText is a no-op without a click listener (see
+        // SoftKeyboard) — this is the field most people hit first, so it's the one
+        // where a silently-dead OK is most confusing.
+        urlInput.setOnClickListener { SoftKeyboard.showFor(urlInput) }
         urlInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 UrlNormalizer.normalize(urlInput.text.toString())?.let { onSubmitUrl(it) }
+                SoftKeyboard.hide(urlInput)
                 true
             } else {
                 false
@@ -132,6 +138,7 @@ class HomeView @JvmOverloads constructor(
 
     fun hide() {
         visibility = View.GONE
+        SoftKeyboard.hide(urlInput)
         // Nothing is on screen to animate. Left running, this keeps ticking
         // behind the WebView and straight through playback.
         stopCycle()
