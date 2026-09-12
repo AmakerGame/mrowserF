@@ -42,7 +42,9 @@ Most Android TV boxes are locked into whatever the app store carries. If a websi
 | 🖱️ **D-pad virtual cursor** | An accelerating, edge-aware pointer driven entirely by the directional pad and OK button — no mouse, no touchscreen, no keyboard required. |
 | ⭐ **Favorites & history** | A home-screen grid for quick launches, plus a deduplicated, newest-first browsing history with relative timestamps. |
 | 🚫 **Smart pop-up handling** | Pop-ups the *page* opens on its own are blocked; ones the *user* clicks still open (so `target="_blank"` links behave), and BACK returns you cleanly. |
-| ⚙️ **Live settings** | Auto-open-player, pop-up blocking, and cursor speed all apply immediately — no restart. |
+| 🌐 **Multi-language UI** | Full interface translations for **English**, **Українська**, and **Русский**, plus a System default option — switch anytime from Settings, no reinstall needed. |
+| 🖥️ **Desktop site mode** | Requests a page's desktop layout instead of its mobile/TV one, for sites that hide content or streams behind a stripped-down mobile view. |
+| ⚙️ **Live settings** | Auto-open-player, pop-up blocking, cursor speed, desktop mode, language, and clear-history-on-exit all apply immediately — no restart. |
 | 🪶 **Built for weak hardware** | Plain Kotlin, framework `Activity` + XML layouts, no AndroidX/Compose bloat beyond Media3 itself. |
 | 🔓 **No Google dependency** | No Play Services, no analytics, no telemetry — works on de-Googled and minimal Android TV builds. |
 
@@ -166,6 +168,12 @@ No. It's a general-purpose browser with nothing pre-loaded. You're responsible f
 
 **Will it run without Google Play Services?**
 Yes — that's a hard requirement of the project, not an afterthought.
+
+**Can I change the language?**
+Yes — Settings → Language. Choose System default, Ukrainian, English, or Russian; it applies right away.
+
+**Does it keep my browsing history?**
+Locally on-device only, never uploaded anywhere. Turn on **Clear history on exit** in Settings if you'd rather it not persist between sessions.
 
 ---
 
