@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/surface">
 
-    <net.mrowser.web.CursorLayout
+    <com.EdS.mrowserF.web.CursorLayout
         android:id="@+id/cursorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -103,20 +103,20 @@
             android:textColor="@color/on_surface"
             android:textSize="18sp"
             android:visibility="gone" />
-    </net.mrowser.web.CursorLayout>
+    </com.EdS.mrowserF.web.CursorLayout>
 
-    <net.mrowser.home.HomeView
+    <com.EdS.mrowserF.home.HomeView
         android:id="@+id/homeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <net.mrowser.home.HistoryView
+    <com.EdS.mrowserF.home.HistoryView
         android:id="@+id/historyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <net.mrowser.home.SettingsView
+    <com.EdS.mrowserF.home.SettingsView
         android:id="@+id/settingsView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

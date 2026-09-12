@@ -145,7 +145,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "style: add netflix dark theme
 Create `app/src/test/kotlin/net/mrowser/web/CursorGeometryTest.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -203,7 +203,7 @@ Expected: FAIL — compile error `unresolved reference: CursorGeometry`.
 Create `app/src/main/kotlin/net/mrowser/web/CursorGeometry.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
 /** Pure cursor math: no Android types, fully unit-testable. */
 object CursorGeometry {
@@ -259,10 +259,10 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add cursor geometry wit
 Create `app/src/test/kotlin/net/mrowser/web/ChromeVisibilityTest.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
-import net.mrowser.web.ChromeVisibility.Event
-import net.mrowser.web.ChromeVisibility.State
+import com.EdS.mrowserF.web.ChromeVisibility.Event
+import com.EdS.mrowserF.web.ChromeVisibility.State
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -306,7 +306,7 @@ Expected: FAIL — compile error `unresolved reference: ChromeVisibility`.
 Create `app/src/main/kotlin/net/mrowser/web/ChromeVisibility.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
 /** Pure visibility reducer for the address-bar overlay. */
 object ChromeVisibility {
@@ -358,7 +358,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add chrome visibility r
 Create `app/src/main/kotlin/net/mrowser/web/ChromeController.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
 import android.os.Handler
 import android.os.Looper
@@ -443,7 +443,7 @@ Note: edge auto-scroll uses `webView.scrollBy` (page-level scroll) for the MVP �
 Create `app/src/main/kotlin/net/mrowser/web/CursorController.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
 import android.os.Handler
 import android.os.Looper
@@ -561,7 +561,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add cursor controller w
 Create `app/src/main/kotlin/net/mrowser/web/BrowserWebChromeClient.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
 import android.app.Activity
 import android.view.View
@@ -643,7 +643,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add fullscreen video we
 Create `app/src/main/kotlin/net/mrowser/web/CursorLayout.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
 import android.content.Context
 import android.graphics.Canvas
@@ -783,7 +783,7 @@ Replace `app/src/main/res/layout/activity_main.xml`:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<net.mrowser.web.CursorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.EdS.mrowserF.web.CursorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cursorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -834,7 +834,7 @@ Replace `app/src/main/res/layout/activity_main.xml`:
             android:src="@android:drawable/ic_menu_rotate"
             android:contentDescription="@string/reload" />
     </LinearLayout>
-</net.mrowser.web.CursorLayout>
+</com.EdS.mrowserF.web.CursorLayout>
 ```
 
 - [ ] **Step 2: Replace MainActivity**
@@ -842,7 +842,7 @@ Replace `app/src/main/res/layout/activity_main.xml`:
 Replace `app/src/main/kotlin/net/mrowser/MainActivity.kt`:
 
 ```kotlin
-package net.mrowser
+package com.EdS.mrowserF
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -853,11 +853,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.ImageButton
-import net.mrowser.web.BrowserWebChromeClient
-import net.mrowser.web.ChromeController
-import net.mrowser.web.CursorController
-import net.mrowser.web.CursorLayout
-import net.mrowser.web.UrlNormalizer
+import com.EdS.mrowserF.web.BrowserWebChromeClient
+import com.EdS.mrowserF.web.ChromeController
+import com.EdS.mrowserF.web.CursorController
+import com.EdS.mrowserF.web.CursorLayout
+import com.EdS.mrowserF.web.UrlNormalizer
 
 class MainActivity : Activity() {
 

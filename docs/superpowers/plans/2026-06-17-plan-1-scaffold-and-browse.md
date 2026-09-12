@@ -181,11 +181,11 @@ plugins {
 }
 
 android {
-    namespace = "net.mrowser"
+    namespace = "com.EdS.mrowserF"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "net.mrowser"
+        applicationId = "com.EdS.mrowserF"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
@@ -339,7 +339,7 @@ Create `app/src/main/AndroidManifest.xml`:
 Create `app/src/main/kotlin/net/mrowser/MainActivity.kt`:
 
 ```kotlin
-package net.mrowser
+package com.EdS.mrowserF
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -414,7 +414,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add leanback manifest, 
 Create `app/src/test/kotlin/net/mrowser/web/UrlNormalizerTest.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -469,7 +469,7 @@ Expected: FAIL — compilation error `unresolved reference: UrlNormalizer`.
 Create `app/src/main/kotlin/net/mrowser/web/UrlNormalizer.kt`:
 
 ```kotlin
-package net.mrowser.web
+package com.EdS.mrowserF.web
 
 /** Turns raw URL-bar input into a loadable URL, or null if it is not one. */
 object UrlNormalizer {
@@ -565,7 +565,7 @@ Create `app/src/main/res/layout/activity_main.xml`:
 Replace the entire contents of `app/src/main/kotlin/net/mrowser/MainActivity.kt`:
 
 ```kotlin
-package net.mrowser
+package com.EdS.mrowserF
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -576,7 +576,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
-import net.mrowser.web.UrlNormalizer
+import com.EdS.mrowserF.web.UrlNormalizer
 
 class MainActivity : Activity() {
 
@@ -697,11 +697,11 @@ val keystoreProps = Properties().apply {
 }
 
 android {
-    namespace = "net.mrowser"
+    namespace = "com.EdS.mrowserF"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "net.mrowser"
+        applicationId = "com.EdS.mrowserF"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
@@ -955,5 +955,5 @@ git -C /Users/mohammad/Projects/mrowser commit -m "docs: add readme and mit lice
 
 - **Spec coverage (Plan 1 scope):** stack/build §4/§11 → Tasks 0,1,5,6; manifest/launcher §6.1 → Task 2; minimal WebView host §6.3 → Tasks 2,4; URL entry (subset §6.2) → Tasks 3,4; open-source §12 → Task 7. Favorites/cursor/sniffer/handoff/player intentionally deferred to Plans 2–4 (stated in header).
 - **Placeholder scan:** no TBD/TODO; `CHANGE_ME` is an explicit user-supplied secret, not a plan gap.
-- **Type consistency:** `UrlNormalizer.normalize(String): String?` defined in Task 3 and called identically in Task 4; view IDs `webView`/`urlInput`/`goButton` match between `activity_main.xml` and `MainActivity.kt`; `net.mrowser` namespace/applicationId consistent across manifest, build file, and sources.
+- **Type consistency:** `UrlNormalizer.normalize(String): String?` defined in Task 3 and called identically in Task 4; view IDs `webView`/`urlInput`/`goButton` match between `activity_main.xml` and `MainActivity.kt`; `com.EdS.mrowserF` namespace/applicationId consistent across manifest, build file, and sources.
 ```

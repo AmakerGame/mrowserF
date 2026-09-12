@@ -1,0 +1,54 @@
+package com.EdS.mrowserF.web
+
+/** Pure cursor math: no Android types, fully unit-testable. */
+object CursorGeometry {
+
+    const val BASE_SPEED_PX = 6f
+    const val MAX_SPEED_PX = 20f
+    const val ACCEL_MS = 900L
+
+    data class Point(val x: Float, val y: Float)
+
+    fun clamp(x: Float, y: Float, width: Int, height: Int): Point =
+        Point(x.coerceIn(0f, width.toFloat()), y.coerceIn(0f, height.toFloat()))
+
+    fun step(current: Point, dirX: Int, dirY: Int, speedPx: Float, width: Int, height: Int): Point =
+        clamp(current.x + dirX * speedPx, current.y + dirY * speedPx, width, height)
+
+    /** Ramps base -> max linearly over ACCEL_MS, then holds at max; scaled by [multiplier]. */
+    fun speedForHoldMs(heldMs: Long, multiplier: Float = 1f): Float {
+        val base = when {
+            heldMs <= 0L -> BASE_SPEED_PX
+            heldMs >= ACCEL_MS -> MAX_SPEED_PX
+            else -> {
+                val t = heldMs.toFloat() / ACCEL_MS
+                BASE_SPEED_PX + (MAX_SPEED_PX - BASE_SPEED_PX) * t
+            }
+        }
+        return base * multiplier
+    }
+
+    fun isAtTopEdge(y: Float, zonePx: Float): Boolean = y <= zonePx
+
+    fun isAtBottomEdge(y: Float, height: Int, zonePx: Float): Boolean = y >= height - zonePx
+
+    /**
+     * Vertical page-scroll delta for one frame, or 0 when the page must not move.
+     * [canScrollUp] / [canScrollDown] are the clamp: the cursor pins to y=0, which
+     * keeps it inside the top edge zone forever, so without the gate the caller
+     * scrolls the page up without bound and blank space opens above it.
+     */
+    fun scrollStep(
+        dirY: Int,
+        y: Float,
+        height: Int,
+        zonePx: Float,
+        stepPx: Int,
+        canScrollUp: Boolean,
+        canScrollDown: Boolean
+    ): Int = when {
+        dirY < 0 && canScrollUp && isAtTopEdge(y, zonePx) -> -stepPx
+        dirY > 0 && canScrollDown && isAtBottomEdge(y, height, zonePx) -> stepPx
+        else -> 0
+    }
+}

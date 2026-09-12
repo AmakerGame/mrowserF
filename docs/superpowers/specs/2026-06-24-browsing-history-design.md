@@ -25,8 +25,8 @@ Out of scope (YAGNI): single-entry delete, search/filter, time-bucketed grouping
 ## Architecture
 
 Mirror the existing Favorites clean-architecture split exactly: a thin Android store
-over pure, unit-testable logic. New code lives under `net.mrowser.data` (data layer)
-and `net.mrowser.home` (overlay view), matching where Favorites lives.
+over pure, unit-testable logic. New code lives under `com.EdS.mrowserF.data` (data layer)
+and `com.EdS.mrowserF.home` (overlay view), matching where Favorites lives.
 
 ### Data layer (`data/`)
 

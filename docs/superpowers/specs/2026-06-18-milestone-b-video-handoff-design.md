@@ -37,7 +37,7 @@ This is the milestone that addresses the original problem the project was starte
 
 ## 4. Components
 
-Pure logic under `net.mrowser.stream`; Android-coupled pieces alongside.
+Pure logic under `com.EdS.mrowserF.stream`; Android-coupled pieces alongside.
 
 ### 4.1 `MediaUrlClassifier` (pure)
 - `classify(url): MediaKind` — `MANIFEST_HLS` (`.m3u8`), `MANIFEST_DASH` (`.mpd`), `SUBTITLE` (`.vtt`/`.srt`), `SEGMENT` (`.ts`/`.m4s`), `OTHER`. Case-insensitive, query string ignored.

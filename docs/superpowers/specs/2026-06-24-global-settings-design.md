@@ -34,8 +34,8 @@ the chrome bar.
 ## Architecture
 
 Mirror the existing Favorites/History clean-architecture split: a thin Android store over
-pure, unit-testable logic. New data code lives under `net.mrowser.data`; the overlay view
-under `net.mrowser.home` (where Home/History live).
+pure, unit-testable logic. New data code lives under `com.EdS.mrowserF.data`; the overlay view
+under `com.EdS.mrowserF.home` (where Home/History live).
 
 Settings is a single immutable record (not a list), so there is **no `SettingsOps`** —
 updates are plain `copy()`. Pure logic is limited to (de)serialization and the enums.

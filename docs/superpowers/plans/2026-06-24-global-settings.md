@@ -31,7 +31,7 @@ No dedicated test — these are plain data with no behavior; their values are ex
 - [ ] **Step 1: Create `SubtitleLanguagePref.kt`**
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 /**
  * Default-subtitle preference. [code] is the BCP-47 language tag (null = no preference);
@@ -47,7 +47,7 @@ enum class SubtitleLanguagePref(val code: String?, val trackLabel: String?) {
 - [ ] **Step 2: Create `CursorSpeed.kt`**
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 /** D-pad cursor speed, as a multiplier over the CursorGeometry base/max ramp. */
 enum class CursorSpeed(val multiplier: Float) {
@@ -60,7 +60,7 @@ enum class CursorSpeed(val multiplier: Float) {
 - [ ] **Step 3: Create `Settings.kt`**
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 /** App-wide settings. Defaults are the shipped values. Immutable — update via copy(). */
 data class Settings(
@@ -97,7 +97,7 @@ git commit -m "feat: add Settings data model and enums"
 `app/src/test/kotlin/net/mrowser/data/SettingsJsonTest.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -136,7 +136,7 @@ class SettingsJsonTest {
 
 - [ ] **Step 2: Run the test to verify it fails**
 
-Run: `./gradlew test --tests "net.mrowser.data.SettingsJsonTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.data.SettingsJsonTest"`
 Expected: FAIL / compile error — `SettingsJson` is unresolved.
 
 - [ ] **Step 3: Write the implementation**
@@ -144,7 +144,7 @@ Expected: FAIL / compile error — `SettingsJson` is unresolved.
 `app/src/main/kotlin/net/mrowser/data/SettingsJson.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import org.json.JSONException
 import org.json.JSONObject
@@ -181,7 +181,7 @@ object SettingsJson {
 
 - [ ] **Step 4: Run the test to verify it passes**
 
-Run: `./gradlew test --tests "net.mrowser.data.SettingsJsonTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.data.SettingsJsonTest"`
 Expected: PASS (5 tests)
 
 - [ ] **Step 5: Commit**
@@ -207,7 +207,7 @@ No unit test — file I/O glue, mirroring `JsonFavoritesStore` (also untested); 
 `app/src/main/kotlin/net/mrowser/data/SettingsRepository.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 interface SettingsRepository {
     fun get(): Settings
@@ -220,7 +220,7 @@ interface SettingsRepository {
 `app/src/main/kotlin/net/mrowser/data/JsonSettingsStore.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import java.io.File
 
@@ -284,7 +284,7 @@ Append these three tests inside `CursorGeometryTest` (before the closing brace):
 
 - [ ] **Step 2: Run to verify they fail**
 
-Run: `./gradlew test --tests "net.mrowser.web.CursorGeometryTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.web.CursorGeometryTest"`
 Expected: FAIL / compile error — `speedForHoldMs` takes one argument.
 
 - [ ] **Step 3: Implement the multiplier**
@@ -308,7 +308,7 @@ In `CursorGeometry.kt`, replace the existing `speedForHoldMs` function with:
 
 - [ ] **Step 4: Run to verify all pass**
 
-Run: `./gradlew test --tests "net.mrowser.web.CursorGeometryTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.web.CursorGeometryTest"`
 Expected: PASS (existing + 3 new tests)
 
 - [ ] **Step 5: Commit**
@@ -405,7 +405,7 @@ Append inside `PlaybackRequestTest` (before the closing brace):
 
 - [ ] **Step 2: Run to verify they fail**
 
-Run: `./gradlew test --tests "net.mrowser.stream.PlaybackRequestTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.stream.PlaybackRequestTest"`
 Expected: FAIL / compile error — `PlaybackRequest` has no 5th parameter.
 
 - [ ] **Step 3: Add the field + (de)serialization**
@@ -465,7 +465,7 @@ with:
 
 - [ ] **Step 4: Run to verify all pass**
 
-Run: `./gradlew test --tests "net.mrowser.stream.PlaybackRequestTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.stream.PlaybackRequestTest"`
 Expected: PASS (existing 2 + 2 new — existing ones use the 4-arg constructor, `preferredTextLanguage` defaults to null, omitted from JSON, restored as null).
 
 - [ ] **Step 5: Commit**
@@ -489,10 +489,10 @@ git commit -m "feat: carry preferredTextLanguage on PlaybackRequest"
 `app/src/test/kotlin/net/mrowser/stream/SubtitlePlanTest.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
-import net.mrowser.data.SubtitleLanguagePref
-import net.mrowser.stream.MediaUrlClassifier.MediaKind
+import com.EdS.mrowserF.data.SubtitleLanguagePref
+import com.EdS.mrowserF.stream.MediaUrlClassifier.MediaKind
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -536,7 +536,7 @@ class SubtitlePlanTest {
 
 - [ ] **Step 2: Run to verify it fails**
 
-Run: `./gradlew test --tests "net.mrowser.stream.SubtitlePlanTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.stream.SubtitlePlanTest"`
 Expected: FAIL / compile error — `SubtitlePlan` is unresolved.
 
 - [ ] **Step 3: Write the implementation**
@@ -544,9 +544,9 @@ Expected: FAIL / compile error — `SubtitlePlan` is unresolved.
 `app/src/main/kotlin/net/mrowser/stream/SubtitlePlan.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
-import net.mrowser.data.SubtitleLanguagePref
+import com.EdS.mrowserF.data.SubtitleLanguagePref
 
 /**
  * Pure: turns the selected subtitle candidates + a language preference into the player's
@@ -576,7 +576,7 @@ object SubtitlePlan {
 
 - [ ] **Step 4: Run to verify it passes**
 
-Run: `./gradlew test --tests "net.mrowser.stream.SubtitlePlanTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.stream.SubtitlePlanTest"`
 Expected: PASS (4 tests)
 
 - [ ] **Step 5: Commit**
@@ -601,7 +601,7 @@ No unit test — `bestRequest` touches `CookieManager` (Android). The branching 
 At the top of `StreamSniffer.kt`, add under the existing imports:
 
 ```kotlin
-import net.mrowser.data.SubtitleLanguagePref
+import com.EdS.mrowserF.data.SubtitleLanguagePref
 ```
 
 - [ ] **Step 2: Add the constructor param**
@@ -877,7 +877,7 @@ No unit test (Android `View`); verified by build. Not yet reachable — Task 12 
 `app/src/main/kotlin/net/mrowser/home/SettingsView.kt`:
 
 ```kotlin
-package net.mrowser.home
+package com.EdS.mrowserF.home
 
 import android.app.AlertDialog
 import android.content.Context
@@ -886,11 +886,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
-import net.mrowser.R
-import net.mrowser.data.CursorSpeed
-import net.mrowser.data.Settings
-import net.mrowser.data.SettingsRepository
-import net.mrowser.data.SubtitleLanguagePref
+import com.EdS.mrowserF.R
+import com.EdS.mrowserF.data.CursorSpeed
+import com.EdS.mrowserF.data.Settings
+import com.EdS.mrowserF.data.SettingsRepository
+import com.EdS.mrowserF.data.SubtitleLanguagePref
 
 /** Settings overlay: auto-open toggle + subtitle-language and cursor-speed pickers. */
 class SettingsView @JvmOverloads constructor(
@@ -999,10 +999,10 @@ class SettingsView @JvmOverloads constructor(
 
 - [ ] **Step 2: Register the overlay in `activity_main.xml`**
 
-Immediately after the `<net.mrowser.home.HistoryView .../>` element (and before the closing `</FrameLayout>`), add:
+Immediately after the `<com.EdS.mrowserF.home.HistoryView .../>` element (and before the closing `</FrameLayout>`), add:
 
 ```xml
-    <net.mrowser.home.SettingsView
+    <com.EdS.mrowserF.home.SettingsView
         android:id="@+id/settingsView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -1104,16 +1104,16 @@ to:
 
 - [ ] **Step 3: Add the import + fields in `MainActivity`**
 
-Add the import next to the other `net.mrowser.data` imports:
+Add the import next to the other `com.EdS.mrowserF.data` imports:
 
 ```kotlin
-import net.mrowser.data.JsonSettingsStore
+import com.EdS.mrowserF.data.JsonSettingsStore
 ```
 
-Add the import next to the other `net.mrowser.home` imports:
+Add the import next to the other `com.EdS.mrowserF.home` imports:
 
 ```kotlin
-import net.mrowser.home.SettingsView
+import com.EdS.mrowserF.home.SettingsView
 ```
 
 Add the fields next to `favorites` / `history`:

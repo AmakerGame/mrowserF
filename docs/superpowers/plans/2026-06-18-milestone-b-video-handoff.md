@@ -106,9 +106,9 @@ git -C /Users/mohammad/Projects/mrowser commit -m "build: add media3 exoplayer d
 Create `app/src/test/kotlin/net/mrowser/stream/MediaUrlClassifierTest.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
-import net.mrowser.stream.MediaUrlClassifier.MediaKind
+import com.EdS.mrowserF.stream.MediaUrlClassifier.MediaKind
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -150,7 +150,7 @@ Expected: FAIL — `unresolved reference: MediaUrlClassifier`.
 Create `app/src/main/kotlin/net/mrowser/stream/MediaUrlClassifier.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
 /** Pure classification of a network URL by media role. */
 object MediaUrlClassifier {
@@ -213,9 +213,9 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add media url classifie
 Create `app/src/main/kotlin/net/mrowser/stream/StreamCandidate.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
-import net.mrowser.stream.MediaUrlClassifier.MediaKind
+import com.EdS.mrowserF.stream.MediaUrlClassifier.MediaKind
 
 /** A media URL seen on the current page. `seq` orders by sighting. */
 data class StreamCandidate(val url: String, val kind: MediaKind, val seq: Int)
@@ -226,9 +226,9 @@ data class StreamCandidate(val url: String, val kind: MediaKind, val seq: Int)
 Create `app/src/test/kotlin/net/mrowser/stream/StreamCandidateSelectorTest.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
-import net.mrowser.stream.MediaUrlClassifier.MediaKind
+import com.EdS.mrowserF.stream.MediaUrlClassifier.MediaKind
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -273,9 +273,9 @@ Expected: FAIL — `unresolved reference: StreamCandidateSelector`.
 Create `app/src/main/kotlin/net/mrowser/stream/StreamCandidateSelector.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
-import net.mrowser.stream.MediaUrlClassifier.MediaKind
+import com.EdS.mrowserF.stream.MediaUrlClassifier.MediaKind
 
 /** Pure selection over collected stream candidates. */
 object StreamCandidateSelector {
@@ -318,7 +318,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add stream candidate se
 Create `app/src/test/kotlin/net/mrowser/stream/PlaybackRequestTest.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -352,7 +352,7 @@ Expected: FAIL — `unresolved reference: PlaybackRequest`.
 Create `app/src/main/kotlin/net/mrowser/stream/PlaybackRequest.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
 import org.json.JSONArray
 import org.json.JSONObject
@@ -426,7 +426,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add playback request se
 Create `app/src/main/kotlin/net/mrowser/stream/StreamSniffer.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
 import android.webkit.CookieManager
 import java.util.concurrent.CopyOnWriteArrayList
@@ -490,7 +490,7 @@ class StreamSniffer(
 Create `app/src/main/kotlin/net/mrowser/stream/SniffingWebViewClient.kt`:
 
 ```kotlin
-package net.mrowser.stream
+package com.EdS.mrowserF.stream
 
 import android.graphics.Bitmap
 import android.webkit.WebResourceRequest
@@ -562,7 +562,7 @@ Create `app/src/main/res/drawable/play_chip_bg.xml`:
 
 - [ ] **Step 3: Add the chip to the layout**
 
-In `app/src/main/res/layout/activity_main.xml`, add this `TextView` as the last child inside `<net.mrowser.web.CursorLayout>` (immediately before the closing `</net.mrowser.web.CursorLayout>` tag):
+In `app/src/main/res/layout/activity_main.xml`, add this `TextView` as the last child inside `<com.EdS.mrowserF.web.CursorLayout>` (immediately before the closing `</com.EdS.mrowserF.web.CursorLayout>` tag):
 
 ```xml
     <TextView
@@ -653,13 +653,13 @@ Create `app/src/main/res/layout/player_activity.xml`:
 Create `app/src/main/kotlin/net/mrowser/handoff/HandoffController.kt`:
 
 ```kotlin
-package net.mrowser.handoff
+package com.EdS.mrowserF.handoff
 
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import net.mrowser.player.PlayerActivity
-import net.mrowser.stream.StreamSniffer
+import com.EdS.mrowserF.player.PlayerActivity
+import com.EdS.mrowserF.stream.StreamSniffer
 
 /** Turns a chip activation into a launched PlayerActivity. */
 class HandoffController(
@@ -685,7 +685,7 @@ class HandoffController(
 Create `app/src/main/kotlin/net/mrowser/player/PlayerActivity.kt`:
 
 ```kotlin
-package net.mrowser.player
+package com.EdS.mrowserF.player
 
 import android.app.Activity
 import android.net.Uri
@@ -703,9 +703,9 @@ import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import androidx.media3.ui.PlayerView
-import net.mrowser.R
-import net.mrowser.stream.PlaybackRequest
-import net.mrowser.stream.SubtitleTrack
+import com.EdS.mrowserF.R
+import com.EdS.mrowserF.stream.PlaybackRequest
+import com.EdS.mrowserF.stream.SubtitleTrack
 
 @OptIn(UnstableApi::class)
 class PlayerActivity : Activity() {
@@ -813,7 +813,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add exoplayer handoff p
 Replace `app/src/main/kotlin/net/mrowser/MainActivity.kt`:
 
 ```kotlin
-package net.mrowser
+package com.EdS.mrowserF
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -824,14 +824,14 @@ import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import net.mrowser.handoff.HandoffController
-import net.mrowser.stream.SniffingWebViewClient
-import net.mrowser.stream.StreamSniffer
-import net.mrowser.web.BrowserWebChromeClient
-import net.mrowser.web.ChromeController
-import net.mrowser.web.CursorController
-import net.mrowser.web.CursorLayout
-import net.mrowser.web.UrlNormalizer
+import com.EdS.mrowserF.handoff.HandoffController
+import com.EdS.mrowserF.stream.SniffingWebViewClient
+import com.EdS.mrowserF.stream.StreamSniffer
+import com.EdS.mrowserF.web.BrowserWebChromeClient
+import com.EdS.mrowserF.web.ChromeController
+import com.EdS.mrowserF.web.CursorController
+import com.EdS.mrowserF.web.CursorLayout
+import com.EdS.mrowserF.web.UrlNormalizer
 
 class MainActivity : Activity() {
 

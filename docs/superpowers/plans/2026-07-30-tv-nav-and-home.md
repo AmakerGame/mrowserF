@@ -17,7 +17,7 @@
 - Dependency versions live in `gradle/libs.versions.toml`, never in `app/build.gradle.kts`. This plan adds no dependencies.
 - Netflix-style dark theme; brand red is `#E50914`.
 - All user-visible text goes through `res/values/strings.xml`. No hardcoded strings in Kotlin.
-- Full test command: `./gradlew test`. Single class: `./gradlew test --tests "net.mrowser.<pkg>.<Class>"`.
+- Full test command: `./gradlew test`. Single class: `./gradlew test --tests "com.EdS.mrowserF.<pkg>.<Class>"`.
 - Do **not** push. Commit locally only.
 - Do not bump `versionCode` / `versionName` — that belongs to the release step.
 
@@ -71,7 +71,7 @@ No new imports needed — `assertEquals` is already imported.
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `./gradlew test --tests "net.mrowser.web.CursorGeometryTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.web.CursorGeometryTest"`
 Expected: compilation failure, `Unresolved reference: scrollStep`.
 
 - [ ] **Step 3: Add the pure function**
@@ -102,7 +102,7 @@ In `CursorGeometry.kt`, after `isAtBottomEdge`:
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `./gradlew test --tests "net.mrowser.web.CursorGeometryTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.web.CursorGeometryTest"`
 Expected: PASS, all tests including the pre-existing ones.
 
 - [ ] **Step 5: Wire it into the controller**
@@ -188,7 +188,7 @@ The second test is the upgrade path: an existing v1.0 install has a `settings.js
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `./gradlew test --tests "net.mrowser.data.SettingsJsonTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.data.SettingsJsonTest"`
 Expected: compilation failure, `Cannot find a parameter with this name: seeded`.
 
 - [ ] **Step 3: Add the fields**
@@ -196,7 +196,7 @@ Expected: compilation failure, `Cannot find a parameter with this name: seeded`.
 Replace the whole body of `Settings.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 /** App-wide settings. Defaults are the shipped values. Immutable — update via copy(). */
 data class Settings(
@@ -234,7 +234,7 @@ and extend the `Settings(...)` construction inside `fromJson`:
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `./gradlew test --tests "net.mrowser.data.SettingsJsonTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.data.SettingsJsonTest"`
 Expected: PASS, including the four pre-existing tests.
 
 - [ ] **Step 5: Commit**
@@ -425,7 +425,7 @@ git commit -m "feat: hold BACK to open the address bar"
 Create `app/src/test/kotlin/net/mrowser/home/HomeBackgroundsTest.kt`:
 
 ```kotlin
-package net.mrowser.home
+package com.EdS.mrowserF.home
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -456,9 +456,9 @@ class HomeBackgroundsTest {
 Create `app/src/test/kotlin/net/mrowser/data/DefaultFavoritesTest.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
-import net.mrowser.web.UrlNormalizer
+import com.EdS.mrowserF.web.UrlNormalizer
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -483,7 +483,7 @@ The first test matters because a non-canonical seed URL would be stored differen
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `./gradlew test --tests "net.mrowser.home.HomeBackgroundsTest" --tests "net.mrowser.data.DefaultFavoritesTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.home.HomeBackgroundsTest" --tests "com.EdS.mrowserF.data.DefaultFavoritesTest"`
 Expected: compilation failure, `Unresolved reference: HomeBackgrounds`.
 
 - [ ] **Step 3: Write the pure objects**
@@ -491,7 +491,7 @@ Expected: compilation failure, `Unresolved reference: HomeBackgrounds`.
 Create `app/src/main/kotlin/net/mrowser/home/HomeBackgrounds.kt`:
 
 ```kotlin
-package net.mrowser.home
+package com.EdS.mrowserF.home
 
 /** Pure: the home overlay's random background gradients. No Android types. */
 object HomeBackgrounds {
@@ -517,7 +517,7 @@ object HomeBackgrounds {
 Create `app/src/main/kotlin/net/mrowser/data/DefaultFavorites.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 /** Pure: the starter favorites written once, on first launch. */
 object DefaultFavorites {
@@ -530,7 +530,7 @@ object DefaultFavorites {
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `./gradlew test --tests "net.mrowser.home.HomeBackgroundsTest" --tests "net.mrowser.data.DefaultFavoritesTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.home.HomeBackgroundsTest" --tests "com.EdS.mrowserF.data.DefaultFavoritesTest"`
 Expected: PASS.
 
 - [ ] **Step 5: Paint the background**
@@ -568,10 +568,10 @@ and add the method just above `show()`:
 
 - [ ] **Step 6: Seed the favorites on first launch**
 
-In `MainActivity.kt`, add the import next to the other `net.mrowser.data` imports:
+In `MainActivity.kt`, add the import next to the other `com.EdS.mrowserF.data` imports:
 
 ```kotlin
-import net.mrowser.data.DefaultFavorites
+import com.EdS.mrowserF.data.DefaultFavorites
 ```
 
 In `onCreate`, add this line directly after the three store constructions (`favorites` / `history` / `settings`):

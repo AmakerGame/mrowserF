@@ -45,7 +45,7 @@ Dark cinema-minimal, Netflix energy.
 
 ## 5. Components
 
-All under `net.mrowser.web`. Pure logic is split out so it can be unit-tested off-device.
+All under `com.EdS.mrowserF.web`. Pure logic is split out so it can be unit-tested off-device.
 
 ### 5.1 `CursorGeometry` (pure)
 Stateless math, no Android types:

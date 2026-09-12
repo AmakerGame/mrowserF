@@ -8,7 +8,7 @@
 
 **Tech Stack:** Kotlin, Android framework `Activity` (no AndroidX/Compose), `org.json`, JUnit 4.
 
-Reference implementation to mirror: `net.mrowser.data.Favorite*` and `net.mrowser.home.HomeView`.
+Reference implementation to mirror: `com.EdS.mrowserF.data.Favorite*` and `com.EdS.mrowserF.home.HomeView`.
 
 ---
 
@@ -49,7 +49,7 @@ Modified:
 
 `app/src/main/kotlin/net/mrowser/data/HistoryEntry.kt`:
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 /** A visited site. Identity is the url; visitedAt is epoch millis. */
 data class HistoryEntry(val title: String, val url: String, val visitedAt: Long)
@@ -59,7 +59,7 @@ data class HistoryEntry(val title: String, val url: String, val visitedAt: Long)
 
 `app/src/test/kotlin/net/mrowser/data/HistoryOpsTest.kt`:
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -98,14 +98,14 @@ class HistoryOpsTest {
 
 - [ ] **Step 3: Run the test, verify it fails**
 
-Run: `./gradlew test --tests "net.mrowser.data.HistoryOpsTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.data.HistoryOpsTest"`
 Expected: FAIL — `HistoryOps` unresolved reference.
 
 - [ ] **Step 4: Implement HistoryOps**
 
 `app/src/main/kotlin/net/mrowser/data/HistoryOps.kt`:
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 /** Pure list operations on history, keyed by url. */
 object HistoryOps {
@@ -122,7 +122,7 @@ object HistoryOps {
 
 - [ ] **Step 5: Run the test, verify it passes**
 
-Run: `./gradlew test --tests "net.mrowser.data.HistoryOpsTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.data.HistoryOpsTest"`
 Expected: PASS.
 
 - [ ] **Step 6: Commit**
@@ -144,7 +144,7 @@ git commit -m "feat: add HistoryEntry and pure HistoryOps with dedup and cap"
 
 `app/src/test/kotlin/net/mrowser/data/HistoryJsonTest.kt`:
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -175,14 +175,14 @@ class HistoryJsonTest {
 
 - [ ] **Step 2: Run the test, verify it fails**
 
-Run: `./gradlew test --tests "net.mrowser.data.HistoryJsonTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.data.HistoryJsonTest"`
 Expected: FAIL — `HistoryJson` unresolved reference.
 
 - [ ] **Step 3: Implement HistoryJson**
 
 `app/src/main/kotlin/net/mrowser/data/HistoryJson.kt`:
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import org.json.JSONArray
 import org.json.JSONException
@@ -221,7 +221,7 @@ object HistoryJson {
 
 - [ ] **Step 4: Run the test, verify it passes**
 
-Run: `./gradlew test --tests "net.mrowser.data.HistoryJsonTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.data.HistoryJsonTest"`
 Expected: PASS.
 
 - [ ] **Step 5: Commit**
@@ -245,7 +245,7 @@ No unit test — this is thin file I/O over already-tested pure logic, mirroring
 
 `app/src/main/kotlin/net/mrowser/data/HistoryRepository.kt`:
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 interface HistoryRepository {
     fun findAll(): List<HistoryEntry>
@@ -258,7 +258,7 @@ interface HistoryRepository {
 
 `app/src/main/kotlin/net/mrowser/data/JsonHistoryStore.kt`:
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import java.io.File
 
@@ -303,7 +303,7 @@ git commit -m "feat: add HistoryRepository and JsonHistoryStore"
 
 `app/src/test/kotlin/net/mrowser/home/RelativeTimeTest.kt`:
 ```kotlin
-package net.mrowser.home
+package com.EdS.mrowserF.home
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -338,14 +338,14 @@ class RelativeTimeTest {
 
 - [ ] **Step 2: Run the test, verify it fails**
 
-Run: `./gradlew test --tests "net.mrowser.home.RelativeTimeTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.home.RelativeTimeTest"`
 Expected: FAIL — `RelativeTime` unresolved reference.
 
 - [ ] **Step 3: Implement RelativeTime**
 
 `app/src/main/kotlin/net/mrowser/home/RelativeTime.kt`:
 ```kotlin
-package net.mrowser.home
+package com.EdS.mrowserF.home
 
 /** Pure formatter for an elapsed-millis delta into a short "Nm ago" label. */
 object RelativeTime {
@@ -365,7 +365,7 @@ object RelativeTime {
 
 - [ ] **Step 4: Run the test, verify it passes**
 
-Run: `./gradlew test --tests "net.mrowser.home.RelativeTimeTest"`
+Run: `./gradlew test --tests "com.EdS.mrowserF.home.RelativeTimeTest"`
 Expected: PASS.
 
 - [ ] **Step 5: Commit**
@@ -557,7 +557,7 @@ No unit test (Android view glue). Verified by the build in Task 9.
 
 `app/src/main/kotlin/net/mrowser/home/HistoryView.kt`:
 ```kotlin
-package net.mrowser.home
+package com.EdS.mrowserF.home
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -569,9 +569,9 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
-import net.mrowser.R
-import net.mrowser.data.HistoryEntry
-import net.mrowser.data.HistoryRepository
+import com.EdS.mrowserF.R
+import com.EdS.mrowserF.data.HistoryEntry
+import com.EdS.mrowserF.data.HistoryRepository
 
 /** History overlay: heading + clear-all + a list of visited sites, newest first. */
 class HistoryView @JvmOverloads constructor(
@@ -810,7 +810,7 @@ In `app/src/main/res/layout/activity_main.xml`:
 (b) Add the `HistoryView` overlay as the last child of the root `FrameLayout`, immediately
 after the `HomeView` element (so it sits on top of everything; starts hidden):
 ```xml
-    <net.mrowser.home.HistoryView
+    <com.EdS.mrowserF.home.HistoryView
         android:id="@+id/historyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -821,11 +821,11 @@ after the `HomeView` element (so it sits on top of everything; starts hidden):
 
 In `app/src/main/kotlin/net/mrowser/MainActivity.kt`, make the following edits.
 
-(a) Add imports (with the existing `net.mrowser` imports):
+(a) Add imports (with the existing `com.EdS.mrowserF` imports):
 ```kotlin
-import net.mrowser.data.HistoryEntry
-import net.mrowser.data.JsonHistoryStore
-import net.mrowser.home.HistoryView
+import com.EdS.mrowserF.data.HistoryEntry
+import com.EdS.mrowserF.data.JsonHistoryStore
+import com.EdS.mrowserF.home.HistoryView
 ```
 
 (b) Add fields next to the other `lateinit` fields (after `private lateinit var favorites: JsonFavoritesStore`):

@@ -42,4 +42,11 @@
     <string name="cursor_fast">Fast</string>
     <string name="popup_blocked">Pop-up blocked</string>
     <string name="block_popups_title">Block pop-ups</string>
+    <string name="desktop_mode_title">Desktop site mode</string>
+    <string name="clear_on_exit_title">Clear history on exit</string>
+    <string name="language_title">Language</string>
+    <string name="language_system">System default</string>
+    <string name="language_uk">Ukrainian</string>
+    <string name="language_en">English</string>
+    <string name="language_ru">Russian</string>
 </resources>

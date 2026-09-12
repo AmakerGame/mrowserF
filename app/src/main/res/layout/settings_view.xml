@@ -15,6 +15,17 @@
         android:textSize="28sp"
         android:textStyle="bold" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/settingsAutoOpenRow"
         android:layout_width="match_parent"
@@ -73,6 +84,7 @@
         android:id="@+id/settingsCursorRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@drawable/focus_ring"
@@ -94,4 +106,87 @@
             android:textColor="@color/accent"
             android:textSize="18sp" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settingsDesktopModeRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/focus_ring"
+        android:padding="18dp"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/desktop_mode_title"
+            android:textColor="@color/on_surface"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/settingsDesktopModeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settingsClearOnExitRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/focus_ring"
+        android:padding="18dp"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/clear_on_exit_title"
+            android:textColor="@color/on_surface"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/settingsClearOnExitValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settingsLanguageRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/focus_ring"
+        android:padding="18dp"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/language_title"
+            android:textColor="@color/on_surface"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/settingsLanguageValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

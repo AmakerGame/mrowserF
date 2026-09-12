@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-mrowser is a sideload-only Android TV browser (`net.mrowser`) for streaming video. It browses any site with a D-pad-driven virtual mouse cursor, sniffs the page's network traffic for an HLS manifest, and hands that stream off to a native Media3/ExoPlayer activity — because the WebView's built-in player gives poor A/V sync. No Google Play Services; single Gradle module `:app`, all Kotlin.
+mrowser is a sideload-only Android TV browser (`com.EdS.mrowserF`) for streaming video. It browses any site with a D-pad-driven virtual mouse cursor, sniffs the page's network traffic for an HLS manifest, and hands that stream off to a native Media3/ExoPlayer activity — because the WebView's built-in player gives poor A/V sync. No Google Play Services; single Gradle module `:app`, all Kotlin.
 
 ## Commands
 
 ```bash
 ./gradlew test               # unit tests (JVM, no device)
-./gradlew testDebugUnitTest --tests "net.mrowser.stream.MediaUrlClassifierTest"   # single test class
+./gradlew testDebugUnitTest --tests "com.EdS.mrowserF.stream.MediaUrlClassifierTest"   # single test class
 ./gradlew assembleDebug      # debug APK   -> app/build/outputs/apk/debug/
 ./gradlew assembleRelease    # signed APK  -> app/build/outputs/apk/release/  (needs keystore.properties; unsigned if absent)
 ```
@@ -24,7 +24,7 @@ Two activities (`AndroidManifest.xml`), wired in `MainActivity.onCreate`:
 - **MainActivity** — the browser. Hosts a `WebView` inside a custom `CursorLayout`, plus the chrome bar and the home screen overlay.
 - **PlayerActivity** — the native player. Handoff is **automatic** when a stream is detected — unless the **Auto-open synced player** setting is off, in which case only the play chip shows and the user activates it; launched with a serialized `PlaybackRequest` Intent extra. **BACK returns to the browser** (the WebView is paused during playback via `onPause`/`onResume`); the play-synced chip re-enters the player and auto-hides after 30s. Quality / Audio / Speed live in the player's **built-in settings gear** — its click is overridden in `showSettings` (media3 has no public hook, so it reuses `androidx.media3.ui.R.id.exo_settings`). **Subtitles are app-rendered, not player-rendered** (so their timing can be nudged live — see `player/` below): the **sub-sync box** (top-left, shown with the controls) holds a `CC` button (on/off + track picker) and `[−] Sub Sync ±X.Xs [+]` offset buttons (±0.5s/press, clamp ±30s, reset per stream); media3's own CC button is hidden because it greys out with no player text track. Finishes (back to the browser) on any playback error. Holds `FLAG_KEEP_SCREEN_ON` **only while playing** (toggled in `onIsPlayingChanged`) — TV gets no input events mid-movie, so without it the system sleep timeout fires; a paused stream can still sleep.
 
-Code is split by domain under `net.mrowser.*`, and within each domain **pure logic is separated from Android-dependent code so it can be unit-tested without a device**. The pure pieces are the ones with tests in `app/src/test/`. When adding logic, follow this split: put decision/parsing/geometry in a plain object/class and keep the Android glue thin.
+Code is split by domain under `com.EdS.mrowserF.*`, and within each domain **pure logic is separated from Android-dependent code so it can be unit-tested without a device**. The pure pieces are the ones with tests in `app/src/test/`. When adding logic, follow this split: put decision/parsing/geometry in a plain object/class and keep the Android glue thin.
 
 ### `stream/` — HLS detection and handoff
 The core pipeline:

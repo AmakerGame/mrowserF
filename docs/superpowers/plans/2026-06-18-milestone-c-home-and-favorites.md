@@ -46,7 +46,7 @@
 Create `app/src/main/kotlin/net/mrowser/data/Favorite.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 /** A saved site. Identity is the url. */
 data class Favorite(val title: String, val url: String)
@@ -57,7 +57,7 @@ data class Favorite(val title: String, val url: String)
 Create `app/src/test/kotlin/net/mrowser/data/FavoritesOpsTest.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -101,7 +101,7 @@ Expected: FAIL — `unresolved reference: FavoritesOps`.
 Create `app/src/main/kotlin/net/mrowser/data/FavoritesOps.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 /** Pure list operations on favorites, keyed by url. */
 object FavoritesOps {
@@ -144,7 +144,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add favorites list oper
 Create `app/src/test/kotlin/net/mrowser/data/FavoritesJsonTest.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -180,7 +180,7 @@ Expected: FAIL — `unresolved reference: FavoritesJson`.
 Create `app/src/main/kotlin/net/mrowser/data/FavoritesJson.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import org.json.JSONArray
 import org.json.JSONException
@@ -234,7 +234,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add favorites json seri
 Create `app/src/main/kotlin/net/mrowser/data/FavoritesRepository.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 interface FavoritesRepository {
     fun findAll(): List<Favorite>
@@ -249,7 +249,7 @@ interface FavoritesRepository {
 Create `app/src/main/kotlin/net/mrowser/data/JsonFavoritesStore.kt`:
 
 ```kotlin
-package net.mrowser.data
+package com.EdS.mrowserF.data
 
 import java.io.File
 
@@ -520,7 +520,7 @@ git -C /Users/mohammad/Projects/mrowser commit -m "style: add home and favorite-
 Create `app/src/main/kotlin/net/mrowser/home/HomeView.kt`:
 
 ```kotlin
-package net.mrowser.home
+package com.EdS.mrowserF.home
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -533,10 +533,10 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.GridLayout
 import android.widget.TextView
-import net.mrowser.R
-import net.mrowser.data.Favorite
-import net.mrowser.data.FavoritesRepository
-import net.mrowser.web.UrlNormalizer
+import com.EdS.mrowserF.R
+import com.EdS.mrowserF.data.Favorite
+import com.EdS.mrowserF.data.FavoritesRepository
+import com.EdS.mrowserF.web.UrlNormalizer
 
 /** Home overlay: wordmark + URL pill + favorites grid. */
 class HomeView @JvmOverloads constructor(
@@ -645,15 +645,15 @@ git -C /Users/mohammad/Projects/mrowser commit -m "feat: add home view with favo
 Create `app/src/main/kotlin/net/mrowser/home/FavoriteDialog.kt`:
 
 ```kotlin
-package net.mrowser.home
+package com.EdS.mrowserF.home
 
 import android.app.AlertDialog
 import android.content.Context
 import android.widget.EditText
 import android.widget.LinearLayout
-import net.mrowser.R
-import net.mrowser.data.Favorite
-import net.mrowser.data.FavoritesRepository
+import com.EdS.mrowserF.R
+import com.EdS.mrowserF.data.Favorite
+import com.EdS.mrowserF.data.FavoritesRepository
 
 /** Edit (title + url) or delete a favorite, then invoke onChanged. */
 object FavoriteDialog {
@@ -719,7 +719,7 @@ Replace `app/src/main/res/layout/activity_main.xml`:
     android:layout_height="match_parent"
     android:background="@color/surface">
 
-    <net.mrowser.web.CursorLayout
+    <com.EdS.mrowserF.web.CursorLayout
         android:id="@+id/cursorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -803,9 +803,9 @@ Replace `app/src/main/res/layout/activity_main.xml`:
             android:textColor="@color/on_surface"
             android:textSize="18sp"
             android:visibility="gone" />
-    </net.mrowser.web.CursorLayout>
+    </com.EdS.mrowserF.web.CursorLayout>
 
-    <net.mrowser.home.HomeView
+    <com.EdS.mrowserF.home.HomeView
         android:id="@+id/homeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -817,7 +817,7 @@ Replace `app/src/main/res/layout/activity_main.xml`:
 Replace `app/src/main/kotlin/net/mrowser/MainActivity.kt`:
 
 ```kotlin
-package net.mrowser
+package com.EdS.mrowserF
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -831,18 +831,18 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import java.io.File
-import net.mrowser.data.Favorite
-import net.mrowser.data.JsonFavoritesStore
-import net.mrowser.handoff.HandoffController
-import net.mrowser.home.FavoriteDialog
-import net.mrowser.home.HomeView
-import net.mrowser.stream.SniffingWebViewClient
-import net.mrowser.stream.StreamSniffer
-import net.mrowser.web.BrowserWebChromeClient
-import net.mrowser.web.ChromeController
-import net.mrowser.web.CursorController
-import net.mrowser.web.CursorLayout
-import net.mrowser.web.UrlNormalizer
+import com.EdS.mrowserF.data.Favorite
+import com.EdS.mrowserF.data.JsonFavoritesStore
+import com.EdS.mrowserF.handoff.HandoffController
+import com.EdS.mrowserF.home.FavoriteDialog
+import com.EdS.mrowserF.home.HomeView
+import com.EdS.mrowserF.stream.SniffingWebViewClient
+import com.EdS.mrowserF.stream.StreamSniffer
+import com.EdS.mrowserF.web.BrowserWebChromeClient
+import com.EdS.mrowserF.web.ChromeController
+import com.EdS.mrowserF.web.CursorController
+import com.EdS.mrowserF.web.CursorLayout
+import com.EdS.mrowserF.web.UrlNormalizer
 
 class MainActivity : Activity() {
 

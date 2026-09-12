@@ -13,11 +13,11 @@ val keystoreProps = Properties().apply {
 }
 
 android {
-    namespace = "net.mrowser"
+    namespace = "com.EdS.mrowserF"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "net.mrowser"
+        applicationId = "com.EdS.mrowserF"
         minSdk = 23
         targetSdk = 34
         versionCode = 6
