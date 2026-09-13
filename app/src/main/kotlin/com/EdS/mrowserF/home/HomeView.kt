@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.LinearInterpolator
+import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
@@ -21,7 +22,6 @@ import com.EdS.mrowserF.R
 import com.EdS.mrowserF.data.Favorite
 import com.EdS.mrowserF.data.FavoritesRepository
 import com.EdS.mrowserF.web.SoftKeyboard
-import com.EdS.mrowserF.web.UrlNormalizer
 
 /** Home overlay: wordmark + URL pill + favorites grid. */
 class HomeView @JvmOverloads constructor(
@@ -55,9 +55,17 @@ class HomeView @JvmOverloads constructor(
         // SoftKeyboard) — this is the field most people hit first, so it's the one
         // where a silently-dead OK is most confusing.
         urlInput.setOnClickListener { SoftKeyboard.showFor(urlInput) }
-        urlInput.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_GO) {
-                UrlNormalizer.normalize(urlInput.text.toString())?.let { onSubmitUrl(it) }
+        urlInput.setOnEditorActionListener { _, actionId, event ->
+            // The Android TV on-screen keyboard (Leanback) often doesn't signal
+            // IME_ACTION_GO at all — it sends a raw KEYCODE_ENTER key event instead. Miss
+            // that and OK on that keyboard does nothing, even though imeOptions=actionGo
+            // is set correctly. Treat either as "submit".
+            val pressedGo = actionId == EditorInfo.IME_ACTION_GO
+            val pressedEnter = event != null && event.action == KeyEvent.ACTION_DOWN &&
+                (event.keyCode == KeyEvent.KEYCODE_ENTER || event.keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)
+            if (pressedGo || pressedEnter) {
+                val text = urlInput.text.toString()
+                if (text.isNotBlank()) onSubmitUrl(text)
                 SoftKeyboard.hide(urlInput)
                 true
             } else {

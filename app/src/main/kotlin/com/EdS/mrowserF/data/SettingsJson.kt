@@ -14,6 +14,8 @@ object SettingsJson {
             .put("language", settings.language.name)
             .put("desktopMode", settings.desktopMode)
             .put("clearHistoryOnExit", settings.clearHistoryOnExit)
+            .put("searchEngine", settings.searchEngine.name)
+            .put("zoomLevel", settings.zoomLevel.name)
             .put("seeded", settings.seeded)
             .put("navHintShown", settings.navHintShown)
             .toString()
@@ -30,6 +32,8 @@ object SettingsJson {
                 language = enumOrDefault(o.optString("language"), defaults.language),
                 desktopMode = o.optBoolean("desktopMode", defaults.desktopMode),
                 clearHistoryOnExit = o.optBoolean("clearHistoryOnExit", defaults.clearHistoryOnExit),
+                searchEngine = enumOrDefault(o.optString("searchEngine"), defaults.searchEngine),
+                zoomLevel = enumOrDefault(o.optString("zoomLevel"), defaults.zoomLevel),
                 seeded = o.optBoolean("seeded", defaults.seeded),
                 navHintShown = o.optBoolean("navHintShown", defaults.navHintShown)
             )

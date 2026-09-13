@@ -40,4 +40,29 @@ class UrlNormalizerTest {
     @Test fun `returns null when input contains spaces`() {
         assertNull(UrlNormalizer.normalize("foo bar baz"))
     }
+
+    @Test fun `resolve returns the normalized URL when input looks like one`() {
+        assertEquals(
+            "https://example.com",
+            UrlNormalizer.resolve("example.com", com.EdS.mrowserF.data.SearchEngine.GOOGLE)
+        )
+    }
+
+    @Test fun `resolve falls back to a search query for a bare word`() {
+        assertEquals(
+            "https://www.google.com/search?q=cats",
+            UrlNormalizer.resolve("cats", com.EdS.mrowserF.data.SearchEngine.GOOGLE)
+        )
+    }
+
+    @Test fun `resolve falls back to a search query for text with spaces`() {
+        assertEquals(
+            "https://duckduckgo.com/?q=best+movies+2026",
+            UrlNormalizer.resolve("best movies 2026", com.EdS.mrowserF.data.SearchEngine.DUCKDUCKGO)
+        )
+    }
+
+    @Test fun `resolve returns null for blank input`() {
+        assertNull(UrlNormalizer.resolve("   ", com.EdS.mrowserF.data.SearchEngine.GOOGLE))
+    }
 }

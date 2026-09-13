@@ -10,7 +10,11 @@ enum class AppLanguage(val tag: String?) {
     SYSTEM(null),
     UKRAINIAN("uk"),
     ENGLISH("en"),
-    RUSSIAN("ru");
+    RUSSIAN("ru"),
+    POLISH("pl"),
+    GERMAN("de"),
+    SPANISH("es"),
+    FRENCH("fr");
 
     /** The Locale to apply, or null for SYSTEM (meaning: don't override). */
     fun toLocale(): Locale? = tag?.let { Locale(it) }

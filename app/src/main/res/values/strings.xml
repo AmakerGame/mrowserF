@@ -49,4 +49,17 @@
     <string name="language_uk">Ukrainian</string>
     <string name="language_en">English</string>
     <string name="language_ru">Russian</string>
+    <string name="language_pl">Polish</string>
+    <string name="language_de">German</string>
+    <string name="language_es">Spanish</string>
+    <string name="language_fr">French</string>
+    <string name="search_engine_title">Search engine</string>
+    <string name="search_google">Google</string>
+    <string name="search_bing">Bing</string>
+    <string name="search_duckduckgo">DuckDuckGo</string>
+    <string name="zoom_title">Page zoom</string>
+    <string name="zoom_small">Small</string>
+    <string name="zoom_normal">Normal</string>
+    <string name="zoom_large">Large</string>
+    <string name="zoom_extra_large">Extra large</string>
 </resources>

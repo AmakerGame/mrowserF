@@ -24,6 +24,7 @@ import com.EdS.mrowserF.data.HistoryEntry
 import com.EdS.mrowserF.data.JsonFavoritesStore
 import com.EdS.mrowserF.data.JsonHistoryStore
 import com.EdS.mrowserF.data.JsonSettingsStore
+import com.EdS.mrowserF.data.ZoomLevel
 import com.EdS.mrowserF.handoff.HandoffController
 import com.EdS.mrowserF.home.FavoriteDialog
 import com.EdS.mrowserF.home.HistoryView
@@ -147,6 +148,7 @@ class MainActivity : Activity() {
             allowContentAccess = false
         }
         applyDesktopMode(settings.get().desktopMode)
+        applyZoomLevel(settings.get().zoomLevel)
 
         chrome = ChromeController(bar, urlInput, webView)
         val cursor = CursorController(webView, { settings.get().cursorSpeed.multiplier }) { layout.invalidate() }
@@ -167,7 +169,9 @@ class MainActivity : Activity() {
         homeView.bind(
             repository = favorites,
             onOpen = { openUrl(it.url) },
-            onSubmitUrl = { openUrl(it) },
+            onSubmitUrl = { text ->
+                UrlNormalizer.resolve(text, settings.get().searchEngine)?.let { openUrl(it) }
+            },
             onEdit = { fav -> FavoriteDialog.show(this, favorites, fav) { homeView.refresh() } },
             onHistory = { showHistory(fromHome = true) },
             onSettings = { showSettings() }
@@ -181,7 +185,10 @@ class MainActivity : Activity() {
                 Toast.makeText(this, R.string.add_favorite, Toast.LENGTH_SHORT).show()
             }
         )
-        settingsView.bind(settings) { applyDesktopMode(it.desktopMode) }
+        settingsView.bind(settings) { s ->
+            applyDesktopMode(s.desktopMode)
+            applyZoomLevel(s.zoomLevel)
+        }
 
         layout.post { cursor.center(webView.width, webView.height) }
 
@@ -202,9 +209,14 @@ class MainActivity : Activity() {
             toggleCurrentFavorite()
             chrome.onInteracted()
         }
-        urlInput.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_GO) {
-                UrlNormalizer.normalize(urlInput.text.toString())?.let { openUrl(it) }
+        urlInput.setOnEditorActionListener { _, actionId, event ->
+            // Same Leanback-keyboard quirk as HomeView's field — see the comment there.
+            val pressedGo = actionId == EditorInfo.IME_ACTION_GO
+            val pressedEnter = event != null && event.action == KeyEvent.ACTION_DOWN &&
+                (event.keyCode == KeyEvent.KEYCODE_ENTER || event.keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)
+            if (pressedGo || pressedEnter) {
+                UrlNormalizer.resolve(urlInput.text.toString(), settings.get().searchEngine)
+                    ?.let { openUrl(it) }
                 true
             } else {
                 false
@@ -288,6 +300,11 @@ class MainActivity : Activity() {
     private fun applyDesktopMode(enabled: Boolean) {
         webView.settings.userAgentString = if (enabled) DESKTOP_USER_AGENT else null
         if (::webView.isInitialized && webView.url != null) webView.reload()
+    }
+
+    /** Text zoom only, not layout zoom — resizes text without breaking page layout. */
+    private fun applyZoomLevel(level: ZoomLevel) {
+        webView.settings.textZoom = level.percent
     }
 
     private fun isFavorite(url: String): Boolean = favorites.findAll().any { it.url == url }

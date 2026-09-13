@@ -20,8 +20,8 @@ android {
         applicationId = "com.EdS.mrowserF"
         minSdk = 23
         targetSdk = 34
-        versionCode = 8
-        versionName = "1.3.1"
+        versionCode = 10
+        versionName = "0.0.4"
     }
 
     signingConfigs {

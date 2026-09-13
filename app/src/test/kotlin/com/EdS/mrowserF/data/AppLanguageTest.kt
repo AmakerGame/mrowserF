@@ -21,4 +21,20 @@ class AppLanguageTest {
     @Test fun `russian maps to the ru locale`() {
         assertEquals("ru", AppLanguage.RUSSIAN.toLocale()?.language)
     }
+
+    @Test fun `polish maps to the pl locale`() {
+        assertEquals("pl", AppLanguage.POLISH.toLocale()?.language)
+    }
+
+    @Test fun `german maps to the de locale`() {
+        assertEquals("de", AppLanguage.GERMAN.toLocale()?.language)
+    }
+
+    @Test fun `spanish maps to the es locale`() {
+        assertEquals("es", AppLanguage.SPANISH.toLocale()?.language)
+    }
+
+    @Test fun `french maps to the fr locale`() {
+        assertEquals("fr", AppLanguage.FRENCH.toLocale()?.language)
+    }
 }

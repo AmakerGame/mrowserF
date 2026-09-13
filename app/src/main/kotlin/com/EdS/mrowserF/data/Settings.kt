@@ -16,6 +16,10 @@ data class Settings(
     val desktopMode: Boolean = false,
     /** Wipes browsing history when the app is closed via the exit confirmation. */
     val clearHistoryOnExit: Boolean = false,
+    /** Engine used to build a search query when address-bar text isn't a URL. */
+    val searchEngine: SearchEngine = SearchEngine.GOOGLE,
+    /** Page text zoom, for readability at TV viewing distance. */
+    val zoomLevel: ZoomLevel = ZoomLevel.NORMAL,
     /** Internal bookkeeping, not a user preference: default favorites written once. */
     val seeded: Boolean = false,
     /** Internal bookkeeping, not a user preference: hold-BACK hint shown once. */

@@ -49,4 +49,17 @@
     <string name="language_uk">Українська</string>
     <string name="language_en">Англійська</string>
     <string name="language_ru">Російська</string>
+    <string name="language_pl">Польська</string>
+    <string name="language_de">Німецька</string>
+    <string name="language_es">Іспанська</string>
+    <string name="language_fr">Французька</string>
+    <string name="search_engine_title">Пошукова система</string>
+    <string name="search_google">Google</string>
+    <string name="search_bing">Bing</string>
+    <string name="search_duckduckgo">DuckDuckGo</string>
+    <string name="zoom_title">Масштаб сторінки</string>
+    <string name="zoom_small">Малий</string>
+    <string name="zoom_normal">Звичайний</string>
+    <string name="zoom_large">Великий</string>
+    <string name="zoom_extra_large">Дуже великий</string>
 </resources>

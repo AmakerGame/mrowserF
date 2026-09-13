@@ -60,6 +60,23 @@ class SettingsJsonTest {
         assertFalse(s.clearHistoryOnExit)
     }
 
+    @Test fun `round trips the search engine and zoom level`() {
+        val s = Settings(searchEngine = SearchEngine.DUCKDUCKGO, zoomLevel = ZoomLevel.LARGE)
+        assertEquals(s, SettingsJson.fromJson(SettingsJson.toJson(s)))
+    }
+
+    @Test fun `search engine and zoom default for a pre-upgrade file`() {
+        val s = SettingsJson.fromJson("""{"autoOpenPlayer":true,"cursorSpeed":"NORMAL"}""")
+        assertEquals(SearchEngine.GOOGLE, s.searchEngine)
+        assertEquals(ZoomLevel.NORMAL, s.zoomLevel)
+    }
+
+    @Test fun `unknown search engine or zoom name falls back to default`() {
+        val s = SettingsJson.fromJson("""{"searchEngine":"YAHOO","zoomLevel":"HUGE"}""")
+        assertEquals(SearchEngine.GOOGLE, s.searchEngine)
+        assertEquals(ZoomLevel.NORMAL, s.zoomLevel)
+    }
+
     @Test fun `round trips the internal flags`() {
         val s = Settings(seeded = true, navHintShown = true)
         assertEquals(s, SettingsJson.fromJson(SettingsJson.toJson(s)))
