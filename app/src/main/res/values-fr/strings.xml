@@ -42,6 +42,7 @@
     <string name="cursor_fast">Rapide</string>
     <string name="popup_blocked">Pop-up bloquée</string>
     <string name="block_popups_title">Bloquer les pop-ups</string>
+    <string name="no_app_for_link">Aucune application sur cet appareil ne peut ouvrir ce lien</string>
     <string name="desktop_mode_title">Mode site de bureau</string>
     <string name="clear_on_exit_title">Effacer l\'historique en quittant</string>
     <string name="language_title">Langue</string>

@@ -42,6 +42,7 @@
     <string name="cursor_fast">Rápido</string>
     <string name="popup_blocked">Ventana emergente bloqueada</string>
     <string name="block_popups_title">Bloquear ventanas emergentes</string>
+    <string name="no_app_for_link">Ninguna app de este dispositivo puede abrir ese enlace</string>
     <string name="desktop_mode_title">Modo de sitio de escritorio</string>
     <string name="clear_on_exit_title">Borrar historial al salir</string>
     <string name="language_title">Idioma</string>

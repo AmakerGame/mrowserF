@@ -42,6 +42,7 @@
     <string name="cursor_fast">Schnell</string>
     <string name="popup_blocked">Pop-up blockiert</string>
     <string name="block_popups_title">Pop-ups blockieren</string>
+    <string name="no_app_for_link">Keine App auf diesem Gerät kann diesen Link öffnen</string>
     <string name="desktop_mode_title">Desktop-Modus</string>
     <string name="clear_on_exit_title">Verlauf beim Beenden löschen</string>
     <string name="language_title">Sprache</string>

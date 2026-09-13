@@ -42,6 +42,7 @@
     <string name="cursor_fast">Быстро</string>
     <string name="popup_blocked">Всплывающее окно заблокировано</string>
     <string name="block_popups_title">Блокировать всплывающие окна</string>
+    <string name="no_app_for_link">На этом устройстве нет приложения, способного открыть эту ссылку</string>
     <string name="desktop_mode_title">Режим версии для ПК</string>
     <string name="clear_on_exit_title">Очищать историю при выходе</string>
     <string name="language_title">Язык</string>

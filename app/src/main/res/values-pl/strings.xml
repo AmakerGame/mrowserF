@@ -42,6 +42,7 @@
     <string name="cursor_fast">Szybko</string>
     <string name="popup_blocked">Zablokowano wyskakujące okno</string>
     <string name="block_popups_title">Blokuj wyskakujące okna</string>
+    <string name="no_app_for_link">Żadna aplikacja na tym urządzeniu nie może otworzyć tego linku</string>
     <string name="desktop_mode_title">Tryb wersji na komputer</string>
     <string name="clear_on_exit_title">Czyść historię przy wyjściu</string>
     <string name="language_title">Język</string>

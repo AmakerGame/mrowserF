@@ -42,6 +42,7 @@
     <string name="cursor_fast">Швидко</string>
     <string name="popup_blocked">Спливаюче вікно заблоковано</string>
     <string name="block_popups_title">Блокувати спливаючі вікна</string>
+    <string name="no_app_for_link">На цьому пристрої немає застосунку, який може відкрити це посилання</string>
     <string name="desktop_mode_title">Режим версії для ПК</string>
     <string name="clear_on_exit_title">Очищати історію при виході</string>
     <string name="language_title">Мова</string>

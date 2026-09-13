@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
@@ -36,6 +37,8 @@ import com.EdS.mrowserF.web.BrowserWebChromeClient
 import com.EdS.mrowserF.web.ChromeController
 import com.EdS.mrowserF.web.CursorController
 import com.EdS.mrowserF.web.CursorLayout
+import com.EdS.mrowserF.web.ExternalIntentLauncher
+import com.EdS.mrowserF.web.IncomingUrl
 import com.EdS.mrowserF.web.UrlNormalizer
 
 class MainActivity : Activity() {
@@ -58,6 +61,7 @@ class MainActivity : Activity() {
     private lateinit var historyView: HistoryView
     private lateinit var settings: JsonSettingsStore
     private lateinit var settingsView: SettingsView
+    private lateinit var externalLinks: ExternalIntentLauncher
 
     /** True when history was opened from the home overlay (BACK returns to home);
      *  false when opened from the chrome bar mid-browse (BACK returns to the page). */
@@ -105,6 +109,12 @@ class MainActivity : Activity() {
         )
         handoff = HandoffController(this, sniffer)
 
+        externalLinks = ExternalIntentLauncher(
+            context = this,
+            onFallback = { url -> webView.loadUrl(url) },
+            onNoApp = { Toast.makeText(this, R.string.no_app_for_link, Toast.LENGTH_SHORT).show() }
+        )
+
         webView.webViewClient = SniffingWebViewClient(
             sniffer,
             onNavigate = { url -> updateUrlText(url) },
@@ -117,7 +127,8 @@ class MainActivity : Activity() {
                     clearHistoryOnLoad = false
                     webView.clearHistory()
                 }
-            }
+            },
+            onExternalScheme = { url -> externalLinks.launch(url) }
         )
         chromeClient = BrowserWebChromeClient(
             activity = this,
@@ -126,7 +137,8 @@ class MainActivity : Activity() {
             onExit = { layout.invalidate() },
             onTitle = { url, title -> recordHistory(url, title) },
             onPopupBlocked = { Toast.makeText(this, R.string.popup_blocked, Toast.LENGTH_SHORT).show() },
-            blockPopups = { settings.get().blockPopups }
+            blockPopups = { settings.get().blockPopups },
+            launchExternal = { url -> externalLinks.launch(url) }
         )
         webView.webChromeClient = chromeClient
         webView.settings.apply {
@@ -223,7 +235,18 @@ class MainActivity : Activity() {
             }
         }
 
-        showHome()
+        // Launched by another app's link (mrowserF is a registered browser), or from the
+        // launcher / TV home row. Only the former has a page to go to.
+        val link = IncomingUrl.fromViewIntent(intent?.action, intent?.dataString)
+        if (link != null) openUrl(link) else showHome()
+    }
+
+    /** A link from another app while mrowserF is already running. `singleTask` sends it here
+     *  instead of stacking a second browser, so the running page just navigates. */
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        IncomingUrl.fromViewIntent(intent?.action, intent?.dataString)?.let { openUrl(it) }
     }
 
     /** Show exactly one overlay at a time: a second VISIBLE overlay steals window-global
