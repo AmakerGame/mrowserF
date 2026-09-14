@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.EdS.mrowserF.BuildConfig
 import com.EdS.mrowserF.R
 import com.EdS.mrowserF.data.AppLanguage
 import com.EdS.mrowserF.data.CursorSpeed
@@ -16,8 +17,9 @@ import com.EdS.mrowserF.data.Settings
 import com.EdS.mrowserF.data.SettingsRepository
 import com.EdS.mrowserF.data.ZoomLevel
 
-/** Settings overlay: playback/browsing toggles, and pickers for cursor speed, search
- *  engine, page zoom, and language. */
+/** Settings overlay, grouped into categories (Playback, Browsing, Appearance, About):
+ *  toggles, pickers for cursor speed/search engine/page zoom/language, and the app's
+ *  version plus links to its GitHub repos. */
 class SettingsView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
@@ -31,6 +33,8 @@ class SettingsView @JvmOverloads constructor(
     private val searchEngineRow: View
     private val zoomRow: View
     private val languageRow: View
+    private val githubForkRow: View
+    private val githubOriginalRow: View
     private val autoOpenValue: TextView
     private val popupValue: TextView
     private val cursorValue: TextView
@@ -39,9 +43,11 @@ class SettingsView @JvmOverloads constructor(
     private val searchEngineValue: TextView
     private val zoomValue: TextView
     private val languageValue: TextView
+    private val versionValue: TextView
 
     private var repository: SettingsRepository? = null
     private var onChanged: (Settings) -> Unit = {}
+    private var onOpenLink: (String) -> Unit = {}
 
     init {
         LayoutInflater.from(context).inflate(R.layout.settings_view, this, true)
@@ -53,6 +59,8 @@ class SettingsView @JvmOverloads constructor(
         searchEngineRow = findViewById(R.id.settingsSearchEngineRow)
         zoomRow = findViewById(R.id.settingsZoomRow)
         languageRow = findViewById(R.id.settingsLanguageRow)
+        githubForkRow = findViewById(R.id.settingsGithubForkRow)
+        githubOriginalRow = findViewById(R.id.settingsGithubOriginalRow)
         autoOpenValue = findViewById(R.id.settingsAutoOpenValue)
         popupValue = findViewById(R.id.settingsPopupValue)
         cursorValue = findViewById(R.id.settingsCursorValue)
@@ -61,6 +69,8 @@ class SettingsView @JvmOverloads constructor(
         searchEngineValue = findViewById(R.id.settingsSearchEngineValue)
         zoomValue = findViewById(R.id.settingsZoomValue)
         languageValue = findViewById(R.id.settingsLanguageValue)
+        versionValue = findViewById(R.id.settingsVersionValue)
+        versionValue.text = BuildConfig.VERSION_NAME
 
         autoOpenRow.setOnClickListener { toggleAutoOpen() }
         popupRow.setOnClickListener { toggleBlockPopups() }
@@ -70,13 +80,22 @@ class SettingsView @JvmOverloads constructor(
         searchEngineRow.setOnClickListener { pickSearchEngine() }
         zoomRow.setOnClickListener { pickZoom() }
         languageRow.setOnClickListener { pickLanguage() }
+        githubForkRow.setOnClickListener { onOpenLink(URL_GITHUB_FORK) }
+        githubOriginalRow.setOnClickListener { onOpenLink(URL_GITHUB_ORIGINAL) }
     }
 
     /** [onChanged] fires after every update, with the settings snapshot that was just saved —
      *  used by the host activity to re-apply things that can't just be read lazily
-     *  (e.g. the WebView's User-Agent string for desktop mode, or its text zoom). */
-    fun bind(repository: SettingsRepository, onChanged: (Settings) -> Unit = {}) {
+     *  (e.g. the WebView's User-Agent string for desktop mode, or its text zoom).
+     *  [onOpenLink] fires when a GitHub row is tapped, with the URL to load — mrowserF has
+     *  no external-links view, so "open in GitHub" means "open in this browser". */
+    fun bind(
+        repository: SettingsRepository,
+        onOpenLink: (String) -> Unit = {},
+        onChanged: (Settings) -> Unit = {}
+    ) {
         this.repository = repository
+        this.onOpenLink = onOpenLink
         this.onChanged = onChanged
     }
 
@@ -201,5 +220,10 @@ class SettingsView @JvmOverloads constructor(
         AppLanguage.GERMAN -> R.string.language_de
         AppLanguage.SPANISH -> R.string.language_es
         AppLanguage.FRENCH -> R.string.language_fr
+    }
+
+    private companion object {
+        private const val URL_GITHUB_FORK = "https://github.com/AmakerGame/mrowserF"
+        private const val URL_GITHUB_ORIGINAL = "https://github.com/m-salehi-v/mrowser"
     }
 }

@@ -26,220 +26,164 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/settingsAutoOpenRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/focus_ring"
-        android:padding="18dp"
-        android:focusable="true">
+            <!-- Playback -->
+            <TextView
+                style="@style/SettingsCategoryLabel"
+                android:layout_marginTop="0dp"
+                android:text="@string/category_playback" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/auto_open_title"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp" />
+            <LinearLayout
+                android:id="@+id/settingsAutoOpenRow"
+                style="@style/SettingsRow">
 
-        <TextView
-            android:id="@+id/settingsAutoOpenValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent"
-            android:textSize="18sp" />
-    </LinearLayout>
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/auto_open_title" />
 
-    <LinearLayout
-        android:id="@+id/settingsPopupRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/focus_ring"
-        android:padding="18dp"
-        android:focusable="true">
+                <TextView
+                    android:id="@+id/settingsAutoOpenValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/block_popups_title"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp" />
+            <!-- Browsing -->
+            <TextView
+                style="@style/SettingsCategoryLabel"
+                android:text="@string/category_browsing" />
 
-        <TextView
-            android:id="@+id/settingsPopupValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent"
-            android:textSize="18sp" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/settingsPopupRow"
+                style="@style/SettingsRow">
 
-    <LinearLayout
-        android:id="@+id/settingsCursorRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/focus_ring"
-        android:padding="18dp"
-        android:focusable="true">
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/block_popups_title" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/cursor_speed_title"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/settingsPopupValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/settingsCursorValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent"
-            android:textSize="18sp" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/settingsDesktopModeRow"
+                style="@style/SettingsRow">
 
-    <LinearLayout
-        android:id="@+id/settingsDesktopModeRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/focus_ring"
-        android:padding="18dp"
-        android:focusable="true">
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/desktop_mode_title" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/desktop_mode_title"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/settingsDesktopModeValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/settingsDesktopModeValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent"
-            android:textSize="18sp" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/settingsSearchEngineRow"
+                style="@style/SettingsRow">
 
-    <LinearLayout
-        android:id="@+id/settingsClearOnExitRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/focus_ring"
-        android:padding="18dp"
-        android:focusable="true">
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/search_engine_title" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/clear_on_exit_title"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/settingsSearchEngineValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/settingsClearOnExitValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent"
-            android:textSize="18sp" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/settingsClearOnExitRow"
+                style="@style/SettingsRow">
 
-    <LinearLayout
-        android:id="@+id/settingsSearchEngineRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/focus_ring"
-        android:padding="18dp"
-        android:focusable="true">
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/clear_on_exit_title" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/search_engine_title"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/settingsClearOnExitValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/settingsSearchEngineValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent"
-            android:textSize="18sp" />
-    </LinearLayout>
+            <!-- Appearance -->
+            <TextView
+                style="@style/SettingsCategoryLabel"
+                android:text="@string/category_appearance" />
 
-    <LinearLayout
-        android:id="@+id/settingsZoomRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/focus_ring"
-        android:padding="18dp"
-        android:focusable="true">
+            <LinearLayout
+                android:id="@+id/settingsCursorRow"
+                style="@style/SettingsRow">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/zoom_title"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp" />
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/cursor_speed_title" />
 
-        <TextView
-            android:id="@+id/settingsZoomValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent"
-            android:textSize="18sp" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/settingsCursorValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/settingsLanguageRow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/focus_ring"
-        android:padding="18dp"
-        android:focusable="true">
+            <LinearLayout
+                android:id="@+id/settingsZoomRow"
+                style="@style/SettingsRow">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/language_title"
-            android:textColor="@color/on_surface"
-            android:textSize="18sp" />
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/zoom_title" />
 
-        <TextView
-            android:id="@+id/settingsLanguageValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/accent"
-            android:textSize="18sp" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/settingsZoomValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsLanguageRow"
+                style="@style/SettingsRow">
+
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/language_title" />
+
+                <TextView
+                    android:id="@+id/settingsLanguageValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
+
+            <!-- About -->
+            <TextView
+                style="@style/SettingsCategoryLabel"
+                android:text="@string/category_about" />
+
+            <LinearLayout
+                android:id="@+id/settingsVersionRow"
+                style="@style/SettingsRow"
+                android:focusable="false"
+                android:background="@null">
+
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/about_version" />
+
+                <TextView
+                    android:id="@+id/settingsVersionValue"
+                    style="@style/SettingsRowValue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsGithubForkRow"
+                style="@style/SettingsRow">
+
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/about_github_fork" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settingsGithubOriginalRow"
+                style="@style/SettingsRow"
+                android:layout_marginBottom="0dp">
+
+                <TextView
+                    style="@style/SettingsRowTitle"
+                    android:text="@string/about_github_original" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

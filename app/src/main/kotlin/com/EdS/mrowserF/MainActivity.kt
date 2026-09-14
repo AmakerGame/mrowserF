@@ -3,16 +3,24 @@ package com.EdS.mrowserF
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DownloadManager
+import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.ColorStateList
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.webkit.CookieManager
+import android.webkit.URLUtil
 import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageButton
@@ -20,13 +28,17 @@ import android.widget.TextView
 import android.widget.Toast
 import java.io.File
 import com.EdS.mrowserF.data.DefaultFavorites
+import com.EdS.mrowserF.data.DownloadEntry
+import com.EdS.mrowserF.data.DownloadStatus
 import com.EdS.mrowserF.data.Favorite
 import com.EdS.mrowserF.data.HistoryEntry
+import com.EdS.mrowserF.data.JsonDownloadsStore
 import com.EdS.mrowserF.data.JsonFavoritesStore
 import com.EdS.mrowserF.data.JsonHistoryStore
 import com.EdS.mrowserF.data.JsonSettingsStore
 import com.EdS.mrowserF.data.ZoomLevel
 import com.EdS.mrowserF.handoff.HandoffController
+import com.EdS.mrowserF.home.DownloadsView
 import com.EdS.mrowserF.home.FavoriteDialog
 import com.EdS.mrowserF.home.HistoryView
 import com.EdS.mrowserF.home.HomeView
@@ -62,6 +74,27 @@ class MainActivity : Activity() {
     private lateinit var settings: JsonSettingsStore
     private lateinit var settingsView: SettingsView
     private lateinit var externalLinks: ExternalIntentLauncher
+    private lateinit var downloads: JsonDownloadsStore
+    private lateinit var downloadsView: DownloadsView
+    private lateinit var downloadManager: DownloadManager
+
+    /** Registered dynamically (needs the RECEIVER_EXPORTED/NOT_EXPORTED flag on API 33+),
+     *  so it's unregistered explicitly too rather than relying on process death. */
+    private val downloadCompleteReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L) ?: return
+            if (id == -1L) return
+            val query = DownloadManager.Query().setFilterById(id)
+            downloadManager.query(query)?.use { cursor ->
+                if (!cursor.moveToFirst()) return@use
+                val statusIdx = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
+                val successful = statusIdx >= 0 &&
+                    cursor.getInt(statusIdx) == DownloadManager.STATUS_SUCCESSFUL
+                downloads.updateStatus(id, if (successful) DownloadStatus.COMPLETE else DownloadStatus.FAILED)
+                downloadsView.refresh()
+            }
+        }
+    }
 
     /** True when history was opened from the home overlay (BACK returns to home);
      *  false when opened from the chrome bar mid-browse (BACK returns to the page). */
@@ -84,6 +117,7 @@ class MainActivity : Activity() {
         playChip = findViewById(R.id.playChip)
         homeView = findViewById(R.id.homeView)
         historyView = findViewById(R.id.historyView)
+        downloadsView = findViewById(R.id.downloadsView)
         settingsView = findViewById(R.id.settingsView)
         val bar = findViewById<View>(R.id.chromeBar)
         val backButton = findViewById<ImageButton>(R.id.backButton)
@@ -94,8 +128,11 @@ class MainActivity : Activity() {
 
         favorites = JsonFavoritesStore(File(filesDir, "favorites.json"))
         history = JsonHistoryStore(File(filesDir, "history.json"))
+        downloads = JsonDownloadsStore(File(filesDir, "downloads.json"))
         settings = JsonSettingsStore(File(filesDir, "settings.json"))
         seedDefaultFavorites()
+        downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        registerDownloadReceiver()
 
         sniffer = StreamSniffer(
             userAgent = { webView.settings.userAgentString },
@@ -161,6 +198,9 @@ class MainActivity : Activity() {
         }
         applyDesktopMode(settings.get().desktopMode)
         applyZoomLevel(settings.get().zoomLevel)
+        webView.setDownloadListener { url, userAgent, contentDisposition, mimeType, _ ->
+            startDownload(url, userAgent, contentDisposition, mimeType)
+        }
 
         chrome = ChromeController(bar, urlInput, webView)
         val cursor = CursorController(webView, { settings.get().cursorSpeed.multiplier }) { layout.invalidate() }
@@ -186,6 +226,7 @@ class MainActivity : Activity() {
             },
             onEdit = { fav -> FavoriteDialog.show(this, favorites, fav) { homeView.refresh() } },
             onHistory = { showHistory(fromHome = true) },
+            onDownloads = { showDownloads() },
             onSettings = { showSettings() }
         )
         historyView.bind(
@@ -197,7 +238,16 @@ class MainActivity : Activity() {
                 Toast.makeText(this, R.string.add_favorite, Toast.LENGTH_SHORT).show()
             }
         )
-        settingsView.bind(settings) { s ->
+        downloadsView.bind(
+            repository = downloads,
+            onOpen = { entry -> openDownload(entry) },
+            onRemove = { entry -> downloads.remove(entry.managerId); downloadsView.refresh() },
+            onClear = { downloads.clear(); downloadsView.refresh() }
+        )
+        settingsView.bind(
+            repository = settings,
+            onOpenLink = { url -> openUrl(url) }
+        ) { s ->
             applyDesktopMode(s.desktopMode)
             applyZoomLevel(s.zoomLevel)
         }
@@ -255,6 +305,7 @@ class MainActivity : Activity() {
     private fun hideAllOverlays() {
         homeView.hide()
         historyView.hide()
+        downloadsView.hide()
         settingsView.hide()
     }
 
@@ -288,6 +339,11 @@ class MainActivity : Activity() {
         historyFromHome = fromHome
         hideAllOverlays()
         historyView.show()
+    }
+
+    private fun showDownloads() {
+        hideAllOverlays()
+        downloadsView.show()
     }
 
     /** First launch only: write the shipped starter favorites. Guarded by a persisted
@@ -330,6 +386,78 @@ class MainActivity : Activity() {
         webView.settings.textZoom = level.percent
     }
 
+    /** The WebView can't save a file itself — DownloadManager does the actual fetch
+     *  (survives the app closing) and posts the system "download complete" notification. */
+    private fun startDownload(url: String, userAgent: String, contentDisposition: String?, mimeType: String?) {
+        val fileName = URLUtil.guessFileName(url, contentDisposition, mimeType)
+        val request = try {
+            DownloadManager.Request(Uri.parse(url))
+        } catch (e: IllegalArgumentException) {
+            Toast.makeText(this, R.string.no_app_for_link, Toast.LENGTH_SHORT).show()
+            return
+        }
+        request.apply {
+            setMimeType(mimeType)
+            addRequestHeader("User-Agent", userAgent)
+            // The download often needs the same session cookie the page used (e.g. a
+            // logged-in file host) — DownloadManager makes a fresh request with none of it.
+            CookieManager.getInstance().getCookie(url)?.let { addRequestHeader("Cookie", it) }
+            // App-specific storage: no WRITE_EXTERNAL_STORAGE permission needed on any API
+            // level. DownloadManager still serves a content:// Uri for it (getUriForDownloadedFile)
+            // and still posts the normal completion notification.
+            setDestinationInExternalFilesDir(this@MainActivity, Environment.DIRECTORY_DOWNLOADS, fileName)
+            setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            setTitle(fileName)
+        }
+        val id = try {
+            downloadManager.enqueue(request)
+        } catch (e: SecurityException) {
+            Toast.makeText(this, R.string.no_app_for_link, Toast.LENGTH_SHORT).show()
+            return
+        }
+        downloads.record(DownloadEntry(id, fileName, url, DownloadStatus.DOWNLOADING, System.currentTimeMillis()))
+        downloadsView.refresh()
+        Toast.makeText(this, getString(R.string.download_started, fileName), Toast.LENGTH_SHORT).show()
+    }
+
+    /** Opens a completed download with whatever app the system offers for its type; a
+     *  download still in flight, or one the DownloadManager no longer knows about (cleared
+     *  from the system's own downloads list), just gets a toast instead of a crash. */
+    private fun openDownload(entry: DownloadEntry) {
+        if (entry.status != DownloadStatus.COMPLETE) {
+            Toast.makeText(this, R.string.download_in_progress, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val uri = runCatching { downloadManager.getUriForDownloadedFile(entry.managerId) }.getOrNull()
+        if (uri == null) {
+            Toast.makeText(this, R.string.no_app_for_link, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val mime = downloadManager.getMimeTypeForDownloadedFile(entry.managerId)
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, mime)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, R.string.no_app_for_link, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /** API 33+ requires RECEIVER_EXPORTED/NOT_EXPORTED on a context-registered receiver;
+     *  older platforms don't have the flag at all. mrowserF's own downloads are the only
+     *  thing this needs to hear about, so NOT_EXPORTED (no other app may send it this). */
+    private fun registerDownloadReceiver() {
+        val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(downloadCompleteReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            @Suppress("DEPRECATION")
+            registerReceiver(downloadCompleteReceiver, filter)
+        }
+    }
+
     private fun isFavorite(url: String): Boolean = favorites.findAll().any { it.url == url }
 
     /** Star button: add the current page if absent, remove it if already saved. */
@@ -364,7 +492,12 @@ class MainActivity : Activity() {
         if (::webView.isInitialized) webView.onResume()
         if (::sniffer.isInitialized && sniffer.hasStream() &&
             homeView.visibility != View.VISIBLE && historyView.visibility != View.VISIBLE &&
-            settingsView.visibility != View.VISIBLE) showChip()
+            downloadsView.visibility != View.VISIBLE && settingsView.visibility != View.VISIBLE) showChip()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        runCatching { unregisterReceiver(downloadCompleteReceiver) }
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
@@ -375,6 +508,7 @@ class MainActivity : Activity() {
             val recovered = when {
                 settingsView.visibility == View.VISIBLE -> settingsView.restoreFocus()
                 historyView.visibility == View.VISIBLE -> historyView.restoreFocus()
+                downloadsView.visibility == View.VISIBLE -> downloadsView.restoreFocus()
                 homeView.visibility == View.VISIBLE -> homeView.restoreFocus()
                 else -> layout.requestFocus()
             }
@@ -394,6 +528,10 @@ class MainActivity : Activity() {
                 historyView.hide()
                 // Return to wherever history was opened from.
                 if (historyFromHome) showHome() else layout.requestFocus()
+            }
+            downloadsView.visibility == View.VISIBLE -> {
+                downloadsView.hide()
+                showHome()
             }
             homeView.visibility == View.VISIBLE -> confirmExit()
             else -> confirmCloseTab()

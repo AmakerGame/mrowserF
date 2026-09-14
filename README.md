@@ -8,7 +8,7 @@ Point it at a site your TV has no app for, let it find the stream, and watch it 
 
 [![Build](https://github.com/AmakerGame/mrowserF/actions/workflows/build.yml/badge.svg)](https://github.com/AmakerGame/mrowserF/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Latest release](https://img.shields.io/github/v/release/AmakerGame/mrowserF?include_prereleases&sort=semver)](https://github.com/AmakerGame/mrowserF/releases)
+[![Latest release](https://img.shields.io/github/v/release/AmakerGame/mrowserF?include_prereleases)](https://github.com/AmakerGame/mrowserF/releases)
 [![Platform](https://img.shields.io/badge/platform-Android%20TV-success.svg)](#requirements)
 [![minSdk](https://img.shields.io/badge/minSdk-23-blue.svg)](#requirements)
 
@@ -47,6 +47,8 @@ Most Android TV boxes are locked into whatever the app store carries. If a websi
 | 🔎 **Page zoom** | Four text-zoom levels (Small → Extra large) for reading pages comfortably from a couch instead of a desk. |
 | 🖥️ **Desktop site mode** | Requests a page's desktop layout instead of its mobile/TV one, for sites that hide content or streams behind a stripped-down mobile view. |
 | 🔗 **Registered as a browser** | mrowserF appears in the system's link chooser, so a link shared from another app can open here. Non-web links (`mailto:`, `market://`, `intent://`, custom app schemes) are handed to the right app instead of dead-ending in the WebView. |
+| ⬇️ **Downloads** | Files a page links to download in the background via Android's own DownloadManager (survives the app closing) and show up in a dedicated Downloads list, reachable from the home header — tap a finished one to open it. |
+| ℹ️ **About** | Settings → About shows the installed version and one-tap links to this fork's GitHub page and the original upstream project's, opened right in the browser. |
 | ⚙️ **Live settings** | Auto-open-player, pop-up blocking, cursor speed, desktop mode, search engine, page zoom, language, and clear-history-on-exit all apply immediately — no restart. |
 | 🪶 **Built for weak hardware** | Plain Kotlin, framework `Activity` + XML layouts, no AndroidX/Compose bloat beyond Media3 itself. |
 | 🔓 **No Google dependency** | No Play Services, no analytics, no telemetry — works on de-Googled and minimal Android TV builds. |
@@ -183,6 +185,9 @@ Yes — mrowserF is a registered browser, so it shows up in the system's chooser
 
 **Does it keep my browsing history?**
 Locally on-device only, never uploaded anywhere. Turn on **Clear history on exit** in Settings if you'd rather it not persist between sessions.
+
+**Where do downloaded files go?**
+Into the app's own storage via Android's DownloadManager, so the download keeps going even if you close mrowserF. Find them in the **Downloads** list on the home screen — tap a finished one to open it with whatever app handles that file type.
 
 ---
 

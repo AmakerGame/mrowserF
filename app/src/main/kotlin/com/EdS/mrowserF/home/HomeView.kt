@@ -38,6 +38,7 @@ class HomeView @JvmOverloads constructor(
     private var onSubmitUrl: (String) -> Unit = {}
     private var onEdit: (Favorite) -> Unit = {}
     private var onHistory: () -> Unit = {}
+    private var onDownloads: () -> Unit = {}
     private var onSettings: () -> Unit = {}
 
     private val backgroundDrawable =
@@ -73,6 +74,7 @@ class HomeView @JvmOverloads constructor(
             }
         }
         findViewById<Button>(R.id.homeHistoryButton).setOnClickListener { onHistory() }
+        findViewById<Button>(R.id.homeDownloadsButton).setOnClickListener { onDownloads() }
         findViewById<ImageButton>(R.id.homeSettingsButton).setOnClickListener { onSettings() }
     }
 
@@ -82,6 +84,7 @@ class HomeView @JvmOverloads constructor(
         onSubmitUrl: (String) -> Unit,
         onEdit: (Favorite) -> Unit,
         onHistory: () -> Unit,
+        onDownloads: () -> Unit,
         onSettings: () -> Unit
     ) {
         this.repository = repository
@@ -89,6 +92,7 @@ class HomeView @JvmOverloads constructor(
         this.onSubmitUrl = onSubmitUrl
         this.onEdit = onEdit
         this.onHistory = onHistory
+        this.onDownloads = onDownloads
         this.onSettings = onSettings
         startIndex = HomeBackgrounds.indexFor(System.currentTimeMillis())
         background = backgroundDrawable

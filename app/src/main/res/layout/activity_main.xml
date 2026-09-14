@@ -116,6 +116,12 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
+    <com.EdS.mrowserF.home.DownloadsView
+        android:id="@+id/downloadsView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <com.EdS.mrowserF.home.SettingsView
         android:id="@+id/settingsView"
         android:layout_width="match_parent"
