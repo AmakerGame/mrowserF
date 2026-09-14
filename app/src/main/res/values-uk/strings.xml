@@ -44,7 +44,7 @@
     <string name="block_popups_title">Блокувати спливаючі вікна</string>
     <string name="no_app_for_link">На цьому пристрої немає застосунку, який може відкрити це посилання</string>
     <string name="downloads">Завантаження</string>
-    <string name="downloads_empty">Завантажень ще немає — завантажені файли з'являться тут.</string>
+    <string name="downloads_empty">Завантажень ще немає — завантажені файли з\'являться тут.</string>
     <string name="download_started">Завантаження %1$s</string>
     <string name="download_in_progress">Ще завантажується — спробуйте, коли завершиться</string>
     <string name="download_status_downloading">Завантажується…</string>
