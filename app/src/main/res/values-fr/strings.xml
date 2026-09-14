@@ -27,12 +27,12 @@
     <string name="clear_history">Tout effacer</string>
     <string name="history_empty">Aucun historique pour le moment — les sites visités apparaîtront ici.</string>
     <string name="exit_title">Quitter mrowserF ?</string>
-    <string name="exit_message">Fermer le navigateur et revenir à l\'écran d\'accueil.</string>
+    <string name="exit_message">Fermer le navigateur et retourner au menu principal.</string>
     <string name="exit">Quitter</string>
     <string name="close_tab_title">Fermer cette page ?</string>
-    <string name="close_tab_message">Revenir à l\'écran d\'accueil.</string>
+    <string name="close_tab_message">Retourner au menu principal.</string>
     <string name="close_tab">Fermer</string>
-    <string name="nav_hint">Maintenez RETOUR pour ouvrir la barre d\'adresse</string>
+    <string name="nav_hint">Maintenez RETOUR pour afficher la barre de navigation</string>
     <string name="auto_open_title">Ouverture automatique du lecteur synchronisé</string>
     <string name="cursor_speed_title">Vitesse du curseur</string>
     <string name="on">Activé</string>
@@ -58,7 +58,7 @@
     <string name="about_github_fork">GitHub (mrowserF)</string>
     <string name="about_github_original">GitHub (original)</string>
     <string name="desktop_mode_title">Mode site de bureau</string>
-    <string name="clear_on_exit_title">Effacer l\'historique en quittant</string>
+    <string name="clear_on_exit_title">Effacer les données de navigation en quittant</string>
     <string name="language_title">Langue</string>
     <string name="language_system">Par défaut du système</string>
     <string name="language_uk">Ukrainien</string>

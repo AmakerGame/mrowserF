@@ -25,7 +25,7 @@
     <string name="sub_sync_value">Синхронізація субтитрів %1$+.1fс</string>
     <string name="history">Історія</string>
     <string name="clear_history">Очистити все</string>
-    <string name="history_empty">Історії ще немає — відвідані сайти з’являться тут.</string>
+    <string name="history_empty">Історії ще немає — відвідані сайти будуть тут.</string>
     <string name="exit_title">Вийти з mrowserF?</string>
     <string name="exit_message">Закрити браузер і повернутися на головний екран.</string>
     <string name="exit">Вийти</string>
@@ -44,7 +44,7 @@
     <string name="block_popups_title">Блокувати спливаючі вікна</string>
     <string name="no_app_for_link">На цьому пристрої немає застосунку, який може відкрити це посилання</string>
     <string name="downloads">Завантаження</string>
-    <string name="downloads_empty">Завантажень ще немає — завантажені файли з\'являться тут.</string>
+    <string name="downloads_empty">Завантажень ще немає — завантажені файли будуть тут.</string>
     <string name="download_started">Завантаження %1$s</string>
     <string name="download_in_progress">Ще завантажується — спробуйте, коли завершиться</string>
     <string name="download_status_downloading">Завантажується…</string>
